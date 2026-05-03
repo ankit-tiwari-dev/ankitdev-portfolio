@@ -240,7 +240,7 @@ export const portfolioData = {
     },
     {
       id: 'system-explorer',
-      title: 'System Architecture Portfolio',
+      title: 'System Explorer Portfolio',
       strapline: 'High-Performance Portfolio with Live Viewport Architecture',
       summary: 'Redesigned as an immersive kinetic gallery with deep contrast aesthetics and automated live system previews.',
       description:

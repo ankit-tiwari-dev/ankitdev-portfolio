@@ -21,23 +21,23 @@ const capabilityBands: Array<{
   title: string;
   skills: SkillRecord[];
 }> = [
-    {
-      title: 'Core Systems',
-      skills: portfolioData.skills.filter((skill) => skill.category === 'Programming' || skill.category === 'Platform'),
-    },
-    {
-      title: 'Product Surface',
-      skills: portfolioData.skills.filter((skill) => skill.category === 'Interface'),
-    },
-    {
-      title: 'Intelligence Layer',
-      skills: portfolioData.skills.filter((skill) => skill.category === 'AI Systems'),
-    },
-    {
-      title: 'Data & Delivery',
-      skills: portfolioData.skills.filter((skill) => skill.category === 'Data' || skill.category === 'Delivery'),
-    },
-  ];
+  {
+    title: 'Core Systems',
+    skills: portfolioData.skills.filter((skill) => skill.category === 'Programming' || skill.category === 'Platform'),
+  },
+  {
+    title: 'Product Surface',
+    skills: portfolioData.skills.filter((skill) => skill.category === 'Interface'),
+  },
+  {
+    title: 'Intelligence Layer',
+    skills: portfolioData.skills.filter((skill) => skill.category === 'AI Systems'),
+  },
+  {
+    title: 'Data & Delivery',
+    skills: portfolioData.skills.filter((skill) => skill.category === 'Data' || skill.category === 'Delivery'),
+  },
+];
 
 const askSuggestions = [
   'Explain a project',
@@ -113,7 +113,7 @@ function App() {
     fetch('https://api.github.com/users/ankit-tiwari-dev/repos?sort=updated&per_page=5')
       .then(res => res.json())
       .then(data => Array.isArray(data) && setGithubRepos(data.slice(0, 5)))
-      .catch(() => { });
+      .catch(() => {});
   }, []);
 
   const achievementsRef = useRef<HTMLDivElement>(null);
@@ -124,17 +124,6 @@ function App() {
 
   const pathLength = useSpring(achievementsProgress, { stiffness: 400, damping: 90 });
 
-
-  useEffect(() => {
-    const root = document.documentElement;
-    if (showWelcome) {
-      root.style.overflow = 'hidden';
-      document.body.style.overflow = 'hidden';
-    } else {
-      root.style.overflow = '';
-      document.body.style.overflow = '';
-    }
-  }, [showWelcome]);
 
   useEffect(() => {
     document.documentElement.classList.add('dark');
@@ -168,7 +157,7 @@ function App() {
       <main className="relative z-10">
         <section
           id="hero"
-          className="relative min-h-[95vh] w-full px-4 sm:px-6 md:px-10 pt-20 sm:pt-24 lg:pt-32"
+          className="mx-auto max-w-7xl px-4 pb-10 pt-[28px] sm:px-5 sm:pb-14 sm:pt-[34px] md:px-8 md:pb-16 md:pt-[42px] lg:px-10 lg:pt-[49px]"
         >
           <div className="w-full">
             <div className="hero-editorial-shell">
@@ -198,7 +187,7 @@ function App() {
 
               <div className="hero-headline-block">
                 {/* Mobile: Name + Photo side by side */}
-                <div className="flex items-start gap-3 sm:gap-5 lg:hidden">
+                <div className="flex items-start gap-5 lg:hidden">
                   <div className="flex-1 min-w-0">
                     <motion.h1
                       initial={{ opacity: 0, y: 20 }}
@@ -211,10 +200,10 @@ function App() {
                     </motion.h1>
                   </div>
                   <motion.div
-                    initial={{ opacity: 0, scale: 0.9, rotate: -5 }}
-                    animate={{ opacity: 1, scale: 1, rotate: 0 }}
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.8, delay: 0.2 }}
-                    className="hero-photo-block shrink-0 pt-2 w-[90px] xs:w-[110px] sm:w-[130px]"
+                    className="shrink-0"
                   >
                     <HeroPhotoSection profileImage={profileImage} name={portfolioData.identity.name} />
                   </motion.div>
@@ -325,10 +314,10 @@ function App() {
 
           <div className="mt-12 space-y-16 sm:mt-20 sm:space-y-32">
             {portfolioData.projects.map((project, index) => (
-              <ProjectCard
-                key={project.id}
-                project={project}
-                index={index}
+              <ProjectCard 
+                key={project.id} 
+                project={project} 
+                index={index} 
                 onExplain={() => setProjectExplain(explainProject(project))}
               />
             ))}
@@ -344,10 +333,10 @@ function App() {
 
           <div className="mt-10 grid grid-cols-1 gap-4 sm:mt-16 sm:grid-cols-2 sm:gap-6 lg:grid-cols-4">
             {capabilityBands.map((band, index) => (
-              <SkillCard
-                key={band.title}
-                band={band}
-                index={index}
+              <SkillCard 
+                key={band.title} 
+                band={band} 
+                index={index} 
               />
             ))}
           </div>
@@ -363,7 +352,7 @@ function App() {
           <div className="relative mt-24">
             {/* The Animated Circuit Trace */}
             <div className="absolute left-[16px] top-0 bottom-0 w-px bg-white/5 sm:left-[20px] md:left-1/2 md:-translate-x-1/2">
-              <motion.div
+              <motion.div 
                 style={{ scaleY: pathLength, originY: 0 }}
                 className="h-full w-full bg-gradient-to-b from-amber-500 via-orange-400 to-amber-200 shadow-[0_0_15px_rgba(245,158,11,0.5)]"
               />
@@ -371,10 +360,10 @@ function App() {
 
             <div className="space-y-16 sm:space-y-32">
               {portfolioData.achievements.map((item, index) => (
-                <AchievementNode
-                  key={item.id}
-                  item={item}
-                  index={index}
+                <AchievementNode 
+                  key={item.id} 
+                  item={item} 
+                  index={index} 
                 />
               ))}
             </div>
@@ -408,15 +397,15 @@ function App() {
                       <ArrowRight size={14} className="-rotate-45" />
                     </div>
                   </div>
-
+                  
                   <h3 className="mt-6 font-heading text-lg font-medium leading-tight text-white group-hover:text-amber-200 transition-colors">
                     {cert.title}
                   </h3>
-
+                  
                   <p className="mt-4 text-sm leading-relaxed text-slate-400">
                     {cert.details}
                   </p>
-
+                  
                   <div className="mt-auto pt-8 flex items-center justify-between text-[10px] uppercase tracking-[0.2em] text-slate-600">
                     <span>{cert.date}</span>
                     <span className="font-medium text-amber-400/50">View Credential</span>
@@ -453,9 +442,9 @@ function App() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mt-16">
             {/* CV Download Card */}
-            <a
-              href={resumeFile}
-              target="_blank"
+            <a 
+              href={resumeFile} 
+              target="_blank" 
               rel="noreferrer"
               className="group relative overflow-hidden rounded-[2rem] border border-white/10 bg-white/[0.02] p-6 sm:p-8 transition-all hover:border-amber-400/30 hover:bg-white/[0.04]"
             >
@@ -478,11 +467,11 @@ function App() {
                 'hackerrank_identity': { icon: Terminal, color: 'text-[#2ec866]', bg: 'bg-[#2ec866]/10', border: 'hover:border-[#2ec866]/30' },
                 'email_direct': { icon: Mail, color: 'text-amber-400', bg: 'bg-amber-400/10', border: 'hover:border-amber-400/30' }
               };
-
+              
               const config = configMap[item.label] || { icon: Sparkles, color: 'text-slate-400', bg: 'bg-white/5', border: 'hover:border-white/20' };
-
+              
               const Icon = config.icon;
-
+              
               return (
                 <a
                   key={item.label}
@@ -732,19 +721,19 @@ function WelcomeScreen({ onEnter }: { onEnter: () => void }) {
       exit={{ opacity: 0, transition: { duration: 0.8, ease: 'easeInOut' } }}
       className="fixed inset-0 z-[70] flex flex-col items-center justify-center bg-[#050505] p-6"
     >
-      <div className="w-full max-w-xl sm:max-w-2xl lg:max-w-3xl">
-        <div className="flex items-center gap-2 sm:gap-3 mb-6 sm:mb-10">
-          <div className="h-2 w-2 shrink-0 rounded-full bg-amber-500 animate-pulse shadow-[0_0_8px_rgba(245,158,11,0.8)]" />
-          <p className="font-mono text-[9px] sm:text-xs uppercase tracking-[0.2em] sm:tracking-[0.5em] text-amber-200/40">Terminal Initialization</p>
+      <div className="w-full max-w-xl">
+        <div className="flex items-center gap-3 mb-10">
+          <div className="h-2 w-2 rounded-full bg-amber-500 animate-pulse shadow-[0_0_8px_rgba(245,158,11,0.8)]" />
+          <p className="font-mono text-[10px] uppercase tracking-[0.5em] text-amber-200/40">Terminal Initialization</p>
         </div>
 
         <div className="space-y-4 font-mono">
           {bootLines.slice(0, bootStep + 1).map((line, i) => (
-            <motion.div
+            <motion.div 
               key={i}
               initial={{ opacity: 0, x: -10 }}
               animate={{ opacity: 1, x: 0 }}
-              className="flex items-center gap-4 text-xs sm:text-base"
+              className="flex items-center gap-4 text-xs sm:text-sm"
             >
               <span className="text-slate-700">0{i + 1}</span>
               <span className={i === bootLines.length - 1 ? "text-amber-200" : "text-slate-400"}>
@@ -758,17 +747,17 @@ function WelcomeScreen({ onEnter }: { onEnter: () => void }) {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="mt-10 sm:mt-20 pt-6 sm:pt-10 border-t border-white/5"
+            className="mt-20 pt-10 border-t border-white/5"
           >
-            <h1 className="font-heading text-xl xs:text-2xl sm:text-6xl font-medium tracking-tight text-white mb-6 sm:mb-8">
+            <h1 className="font-heading text-4xl sm:text-6xl font-medium tracking-tight text-white mb-8">
               Ankit Tiwari <span className="text-amber-500/20">.sys</span>
             </h1>
             <button
               onClick={onEnter}
-              className="group flex w-full sm:w-auto items-center justify-center gap-3 sm:gap-4 rounded-full border border-amber-500/20 bg-amber-500/5 px-4 sm:px-8 py-3 sm:py-4 text-xs sm:text-sm text-amber-200 transition-all hover:border-amber-500/50 hover:bg-amber-500/10"
+              className="group flex items-center gap-4 rounded-full border border-amber-500/20 bg-amber-500/5 px-8 py-4 text-sm text-amber-200 transition-all hover:border-amber-500/50 hover:bg-amber-500/10"
             >
               <span>Initialize Environment</span>
-              <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+              <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
             </button>
           </motion.div>
         )}
@@ -825,18 +814,18 @@ function CustomCursor({ isHovering }: { isHovering: boolean }) {
   );
 }
 
-function ProjectCard({
-  project,
-  index,
-  onExplain
-}: {
-  project: ProjectRecord;
-  index: number;
+function ProjectCard({ 
+  project, 
+  index, 
+  onExplain 
+}: { 
+  project: ProjectRecord; 
+  index: number; 
   onExplain: () => void;
 }) {
   const [isExpanded, setIsExpanded] = useState(false);
   const containerRef = useRef<HTMLElement>(null);
-
+  
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start end", "end start"]
@@ -865,7 +854,7 @@ function ProjectCard({
               </span>
               <span>{project.year}</span>
             </div>
-
+            
             <div>
               <p className="font-heading text-[11px] uppercase tracking-[0.3em] text-amber-200/60">
                 {project.status}
@@ -885,7 +874,22 @@ function ProjectCard({
               </p>
             </div>
 
-            {/* Desktop Preview was previously here - moved to bottom for full width */}
+            {/* Desktop Preview: Auto-loads when expanded */}
+            <div className="hidden lg:block">
+              <AnimatePresence>
+                {isExpanded && project.links.live && (
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.98, y: 30 }}
+                    animate={{ opacity: 1, scale: 1, y: 0 }}
+                    exit={{ opacity: 0, scale: 0.98, y: 30 }}
+                    transition={{ duration: 0.8, ease: [0.23, 1, 0.32, 1] }}
+                    className="pt-10"
+                  >
+                    <LiveViewport url={project.links.live} title={project.title} />
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
           </div>
 
           <div className="project-detail-shell min-w-0">
@@ -918,7 +922,7 @@ function ProjectCard({
                     </p>
 
                     <div className="flex flex-col gap-6 sm:gap-8 lg:gap-10">
-
+                      
                       {/* Top Row: Tags & Pills */}
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8">
                         <div>
@@ -931,7 +935,7 @@ function ProjectCard({
                             ))}
                           </div>
                         </div>
-
+                        
                         <div>
                           <p className="text-[10px] uppercase tracking-[0.3em] text-slate-500">Operational Flow</p>
                           <div className="mt-4 flex flex-wrap gap-2.5">
@@ -967,10 +971,10 @@ function ProjectCard({
                         </a>
                       )}
                       {project.links.live && (
-                        <a
-                          className="subtle-button accent"
-                          href={project.links.live}
-                          target="_blank"
+                        <a 
+                          className="subtle-button accent" 
+                          href={project.links.live} 
+                          target="_blank" 
                           rel="noreferrer"
                         >
                           <Globe size={16} />
@@ -987,32 +991,30 @@ function ProjectCard({
                       </button>
                     </div>
 
-                    {/* Mobile preview was previously here - moved to bottom */}
+                    {/* Mobile Preview: Auto-loads when expanded */}
+                    <AnimatePresence>
+                      {isExpanded && project.links.live && (
+                        <motion.div
+                          initial={{ height: 0, opacity: 0, y: 30 }}
+                          animate={{ height: 'auto', opacity: 1, y: 0 }}
+                          exit={{ height: 0, opacity: 0, y: 30 }}
+                          transition={{ duration: 0.8, ease: [0.23, 1, 0.32, 1] }}
+                          className="pt-10 border-t border-white/5 mt-10 lg:hidden"
+                        >
+                          <div className="flex flex-col gap-4 mb-6">
+                            <p className="text-[10px] uppercase tracking-[0.4em] text-amber-200/60 font-medium">Interactive System Preview</p>
+                            <div className="h-px w-full bg-gradient-to-r from-amber-500/30 to-transparent" />
+                          </div>
+                          <LiveViewport url={project.links.live} title={project.title} />
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
                   </div>
                 </motion.div>
               ) : null}
             </AnimatePresence>
           </div>
         </div>
-
-        {/* FULL WIDTH SYSTEM PREVIEW */}
-        <AnimatePresence>
-          {isExpanded && project.links.live && (
-            <motion.div
-              initial={{ height: 0, opacity: 0, y: 30 }}
-              animate={{ height: 'auto', opacity: 1, y: 0 }}
-              exit={{ height: 0, opacity: 0, y: 30 }}
-              transition={{ duration: 0.8, ease: [0.23, 1, 0.32, 1] }}
-              className="mt-8 overflow-hidden border-t border-white/5 pt-8 sm:mt-12 sm:pt-12"
-            >
-              <div className="flex flex-col gap-4 mb-6">
-                <p className="text-[10px] uppercase tracking-[0.4em] text-amber-200/60 font-medium">Interactive System Preview</p>
-                <div className="h-px w-full bg-gradient-to-r from-amber-500/30 to-transparent" />
-              </div>
-              <LiveViewport url={project.links.live} title={project.title} />
-            </motion.div>
-          )}
-        </AnimatePresence>
       </motion.div>
     </article>
   );
@@ -1023,10 +1025,10 @@ function HeroPhotoSection({ profileImage, name }: { profileImage: string; name: 
   return (
     <div className="group lg:max-w-[300px]">
       <div className="relative mx-auto flex items-center justify-center h-[120px] w-[120px] sm:h-[160px] sm:w-[160px] lg:h-[260px] lg:w-[260px]">
-
+        
         {/* Animated Gradient Blob Background */}
         <div className="absolute inset-2 lg:inset-4 liquid-blob bg-gradient-to-tr from-amber-500 via-orange-400 to-amber-200 opacity-70 blur-md transition-all duration-700 group-hover:scale-105 group-hover:opacity-100 group-hover:blur-lg" />
-
+        
         {/* Secondary Blob for extra color depth */}
         <div className="absolute inset-3 lg:inset-6 liquid-blob-secondary bg-gradient-to-bl from-amber-300 to-orange-500 opacity-60 mix-blend-screen transition-all duration-700 group-hover:scale-110" />
 
@@ -1068,11 +1070,11 @@ function LiveViewport({ url, title }: { url: string; title: string }) {
           <div className="h-2.5 w-2.5 rounded-full bg-[#ffbd2e]" />
           <div className="h-2.5 w-2.5 rounded-full bg-[#27c93f]" />
         </div>
-
+        
         <div className="viewport-url group/url relative cursor-help">
           <Globe size={12} className="text-slate-500" />
           <span className="truncate text-[10px]">{url.replace(/^https?:\/\//, '')}</span>
-
+          
           {/* Tooltip for blocked sites */}
           <div className="absolute left-0 top-full mt-2 hidden w-48 rounded-lg border border-white/10 bg-black/90 p-2 text-[9px] leading-relaxed text-slate-400 backdrop-blur-md group-hover/url:block z-50">
             Some sites restrict embedding for security. Use the arrow icon to open directly.
@@ -1092,9 +1094,9 @@ function LiveViewport({ url, title }: { url: string; title: string }) {
           >
             <Smartphone size={14} />
           </button>
-          <a
-            href={url}
-            target="_blank"
+          <a 
+            href={url} 
+            target="_blank" 
             rel="noreferrer"
             className="ml-1 flex items-center gap-2 rounded-md bg-amber-500/10 px-2 py-1 text-[10px] text-amber-200 hover:bg-amber-500/20 transition-all"
           >
@@ -1112,15 +1114,15 @@ function LiveViewport({ url, title }: { url: string; title: string }) {
             <p className="mt-4 text-[10px] uppercase tracking-[0.3em] text-slate-500">Initializing Session</p>
           </div>
         )}
-
+        
         <iframe
           src={url}
           title={`Preview of ${title}`}
-          className="h-full w-full border-none bg-[#020408] rounded-b-xl origin-top"
+          className="h-full w-full border-none bg-white rounded-b-xl origin-top"
           style={{ height: '100%', minHeight: '500px' }}
           onLoad={() => setLoading(false)}
         />
-
+        
         {/* Overlay helper for potentially blocked sites */}
         {!loading && (
           <div className="pointer-events-none absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-3 rounded-full bg-black/60 px-4 py-2 text-[9px] text-slate-400 backdrop-blur-md opacity-0 transition-opacity hover:opacity-100 group-hover:opacity-100">
@@ -1145,7 +1147,7 @@ function LiveViewport({ url, title }: { url: string; title: string }) {
 function SkillCard({ band, index }: { band: any; index: number }) {
   const icons = [Code, Layout, BrainCircuit, Layers];
   const Icon = icons[index % icons.length];
-
+  
   // Specific layouts for bento effect
   const cardClasses = [
     'lg:col-span-2 lg:row-span-1', // Programming
@@ -1201,7 +1203,7 @@ function AchievementNode({ item, index }: { item: any; index: number }) {
     <div className={`relative flex flex-col items-start gap-6 sm:gap-8 md:gap-12 md:flex-row md:items-center ${isEven ? 'md:flex-row' : 'md:flex-row-reverse'}`}>
       {/* Node Dot */}
       <div className="absolute left-[8px] sm:left-[12px] md:left-1/2 md:-translate-x-1/2 flex h-7 w-7 sm:h-8 sm:w-8 md:h-10 md:w-10 items-center justify-center rounded-full bg-[#020408] border border-white/10 z-10">
-        <motion.div
+        <motion.div 
           initial={{ scale: 0 }}
           whileInView={{ scale: 1 }}
           viewport={{ once: false, margin: "-100px" }}
@@ -1210,7 +1212,7 @@ function AchievementNode({ item, index }: { item: any; index: number }) {
       </div>
 
       {/* Content Card */}
-      <motion.div
+      <motion.div 
         initial={{ opacity: 0, x: isEven ? -50 : 50 }}
         whileInView={{ opacity: 1, x: 0 }}
         viewport={{ once: true }}
@@ -1223,15 +1225,15 @@ function AchievementNode({ item, index }: { item: any; index: number }) {
             <span>•</span>
             <span>{item.date}</span>
           </div>
-
+          
           <h3 className="font-heading text-xl font-medium tracking-tight text-white group-hover:text-amber-200 transition-colors sm:text-2xl">
             {item.title}
           </h3>
-
+          
           <p className="mt-2 text-sm font-medium uppercase tracking-[0.15em] text-slate-400">
             {item.organization}
           </p>
-
+          
           <div className={`mt-4 p-3 rounded-lg border border-white/5 bg-white/[0.02] text-xs leading-relaxed text-slate-400 group-hover:bg-white/[0.04] transition-all sm:mt-6 sm:p-4 sm:rounded-xl sm:text-sm ${isEven ? 'md:ml-auto' : 'md:mr-auto'}`}>
             {item.description}
             <div className="mt-3 pt-3 border-t border-white/5 flex items-center gap-2 text-[9px] uppercase tracking-widest text-slate-600 sm:mt-4 sm:pt-4 sm:gap-3 sm:text-[10px]">
