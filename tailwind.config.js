@@ -4,18 +4,20 @@ export default {
   darkMode: 'class',
   theme: {
     extend: {
+      fontFamily: {
+        sans: ['Plus Jakarta Sans', 'sans-serif'],
+        heading: ['Space Grotesk', 'sans-serif'],
+      },
       colors: {
         primary: {
-          DEFAULT: 'rgb(var(--color-primary) / <alpha-value>)',
-          light: 'rgb(var(--color-primary-light) / <alpha-value>)',
+          DEFAULT: '#00D1FF', // Electric Cyan
+          dark: '#00B2D9',
         },
-        secondary: 'rgb(var(--color-secondary) / <alpha-value>)',
-        accent: 'rgb(var(--color-accent) / <alpha-value>)',
-        background: 'rgb(var(--color-background) / <alpha-value>)',
-        foreground: 'rgb(var(--color-foreground) / <alpha-value>)',
-        card: 'rgb(var(--color-card) / <alpha-value>)',
-        muted: 'rgb(var(--color-muted) / <alpha-value>)',
-        'muted-blue': 'rgb(var(--color-muted-blue) / <alpha-value>)',
+        background: '#0B0F14', // Deep System Dark
+        surface: '#12181F', // Slightly lighter panel
+        border: '#1E262F',
+        foreground: '#F0F4F8',
+        muted: '#64748B',
       },
     },
   },
