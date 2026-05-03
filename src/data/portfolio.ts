@@ -240,7 +240,7 @@ export const portfolioData = {
     },
     {
       id: 'system-explorer',
-      title: 'Kinetic System Explorer',
+      title: 'System Architecture Portfolio',
       strapline: 'High-Performance Portfolio with Live Viewport Architecture',
       summary: 'Redesigned as an immersive kinetic gallery with deep contrast aesthetics and automated live system previews.',
       description:
@@ -262,7 +262,6 @@ export const portfolioData = {
       ],
       links: {
         github: 'https://github.com/ankit-tiwari-dev/ankitdev-portfolio',
-        live: 'https://ankitdev-portfolio.vercel.app/',
       },
       flow: ['Kinetic Gallery', 'Scroll-Linked Motion', 'Live Viewports', 'Automated Previews'],
     },

@@ -13,7 +13,7 @@
 
   body {
     margin: 0;
-    min-width: 250px;
+    min-width: 0;
     background: #020408;
     color: #f2f2f2;
     font-family: 'Manrope', system-ui, sans-serif;
@@ -34,24 +34,32 @@
     font: inherit;
   }
 
-  /* Elegant Custom Scrollbar */
-  ::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
-  }
+}
 
-  ::-webkit-scrollbar-track {
-    background: transparent;
-  }
+/* Force dark scrollbars for all browsers and contexts (including iframes) */
+* {
+  scrollbar-width: thin !important;
+  scrollbar-color: rgba(255, 255, 255, 0.15) transparent !important;
+}
 
-  ::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.08);
-    border-radius: 10px;
-  }
+::-webkit-scrollbar {
+  width: 6px !important;
+  height: 6px !important;
+}
 
-  ::-webkit-scrollbar-thumb:hover {
-    background: rgba(255, 255, 255, 0.15);
-  }
+::-webkit-scrollbar-track {
+  background: transparent !important;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  border-radius: 10px !important;
+  border: 1px solid transparent !important;
+  background-clip: content-box !important;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(255, 255, 255, 0.2) !important;
 }
 
 @layer components {
