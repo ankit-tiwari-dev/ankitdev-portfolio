@@ -722,7 +722,7 @@ function WelcomeScreen({ onEnter }: { onEnter: () => void }) {
       className="fixed inset-0 z-[70] flex flex-col items-center justify-center bg-[#050505] p-6"
     >
       <div className="w-full max-w-xl">
-        <div className="flex items-center gap-3 mb-10">
+        <div className="flex items-center gap-3 mb-6 sm:mb-10">
           <div className="h-2 w-2 rounded-full bg-amber-500 animate-pulse shadow-[0_0_8px_rgba(245,158,11,0.8)]" />
           <p className="font-mono text-[10px] uppercase tracking-[0.5em] text-amber-200/40">Terminal Initialization</p>
         </div>
@@ -747,9 +747,9 @@ function WelcomeScreen({ onEnter }: { onEnter: () => void }) {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="mt-20 pt-10 border-t border-white/5"
+            className="mt-10 sm:mt-20 pt-6 sm:pt-10 border-t border-white/5"
           >
-            <h1 className="font-heading text-4xl sm:text-6xl font-medium tracking-tight text-white mb-8">
+            <h1 className="font-heading text-3xl sm:text-6xl font-medium tracking-tight text-white mb-6 sm:mb-8">
               Ankit Tiwari <span className="text-amber-500/20">.sys</span>
             </h1>
             <button
