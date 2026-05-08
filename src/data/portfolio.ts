@@ -640,11 +640,11 @@ export const portfolioData = {
     },
   ],
   contact: [
-    { label: 'github_access', value: 'ankit-tiwari-dev', href: 'https://github.com/ankit-tiwari-dev' },
-    { label: 'linkedin_sync', value: 'ankit-tiwari-at23', href: 'https://www.linkedin.com/in/ankit-tiwari-at23/' },
-    { label: 'leetcode_metrics', value: 'Ankit_Tiwari_2306', href: 'https://leetcode.com/u/Ankit_Tiwari_2306/' },
-    { label: 'hackerrank_identity', value: 'ankit827691', href: 'https://www.hackerrank.com/profile/ankit827691' },
-    { label: 'email_direct', value: 'ankit827691@gmail.com', href: 'mailto:ankit827691@gmail.com' },
+    { label: 'GitHub', value: 'ankit-tiwari-dev', href: 'https://github.com/ankit-tiwari-dev' },
+    { label: 'LinkedIn', value: 'ankit-tiwari-at23', href: 'https://www.linkedin.com/in/ankit-tiwari-at23/' },
+    { label: 'LeetCode', value: 'Ankit_Tiwari_2306', href: 'https://leetcode.com/u/Ankit_Tiwari_2306/' },
+    { label: 'GeeksforGeeks', value: 'ankit89tl1', href: 'https://www.geeksforgeeks.org/profile/ankit89tl1' },
+    { label: 'Email', value: 'ankit827691@gmail.com', href: 'mailto:ankit827691@gmail.com' },
   ],
   careerKnowledge: {
     bio: "I am Ankit Tiwari, an AI + Full-Stack Engineer focused on building products that feel 'engineered' but act 'intelligent.' I bridge the gap between creative UI and deep system logic.",

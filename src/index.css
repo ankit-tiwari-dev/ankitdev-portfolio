@@ -72,22 +72,22 @@
   }
 
   .project-shell {
-    @apply relative overflow-hidden rounded-2xl border border-white/[0.03] bg-black/40 p-5 backdrop-blur-3xl transition-all duration-700 sm:rounded-[2rem] sm:p-8 md:rounded-[2.5rem] md:p-12;
+    @apply relative overflow-hidden rounded-xl border border-white/[0.03] bg-black/40 p-5 backdrop-blur-3xl transition-all duration-700 sm:p-8 md:p-12;
     box-shadow: 
       0 30px 60px -12px rgba(0, 0, 0, 0.8),
       inset 0 0 0 1px rgba(255, 255, 255, 0.02);
   }
 
   .hero-profile-shell {
-    @apply relative overflow-hidden rounded-2xl border border-slate-800 bg-[#0d1624] p-4 shadow-[0_30px_70px_rgba(0,0,0,0.34)] sm:rounded-[2rem] sm:p-6 md:p-8;
+    @apply relative overflow-hidden rounded-xl border border-slate-800 bg-[#0d1624] p-4 shadow-[0_30px_70px_rgba(0,0,0,0.34)] sm:p-6 md:p-8;
   }
 
   .hero-stat-block {
-    @apply rounded-xl border border-slate-800 bg-[#0b1320] px-3 py-3 sm:rounded-[1.15rem] sm:px-4 sm:py-4;
+    @apply rounded-lg border border-slate-800 bg-[#0b1320] px-3 py-3 sm:px-4 sm:py-4;
   }
 
   .hero-editorial-shell {
-    @apply flex flex-col gap-8 sm:gap-0 sm:min-h-[80vh] sm:justify-between;
+    @apply flex flex-col gap-8 sm:gap-0 sm:min-h-[70vh] justify-start;
   }
 
   .hero-meta-row {
@@ -99,7 +99,7 @@
   }
 
   .hero-headline-block {
-    @apply max-w-5xl py-6 sm:py-9 lg:py-10;
+    @apply max-w-5xl pb-6 sm:pb-8 lg:pb-10;
   }
 
   .hero-headline-layout {
@@ -179,7 +179,7 @@
   }
 
   .hero-photo-info {
-    @apply mt-5 rounded-xl border border-stone-800 bg-[#17130f] px-4 py-4 sm:mt-6 sm:rounded-[1.35rem] sm:px-5 sm:py-5;
+    @apply mt-5 rounded-lg border border-stone-800 bg-[#17130f] px-4 py-4 sm:mt-6 sm:px-5 sm:py-5;
   }
 
   .hero-editorial-actions {
@@ -195,7 +195,7 @@
   }
 
   .hero-foot-row {
-    @apply grid gap-6 border-t border-stone-800 pt-6 sm:gap-8 sm:pt-8 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-center;
+    @apply mt-auto grid gap-6 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-center;
   }
 
   .hero-foot-note {
@@ -207,7 +207,7 @@
   }
 
   .hero-stat-inline {
-    @apply rounded-xl border border-white/[0.03] bg-black px-2.5 py-3 sm:rounded-[1.15rem] sm:px-4 sm:py-4;
+    @apply rounded-lg border border-white/[0.03] bg-black px-2.5 py-3 sm:px-4 sm:py-4;
   }
 
   .welcome-screen-shell {
@@ -223,12 +223,12 @@
   }
 
   .profile-frame {
-    @apply overflow-hidden rounded-2xl border border-stone-700 bg-[#1c1712] shadow-[0_14px_34px_rgba(0,0,0,0.28)] sm:rounded-[1.8rem];
+    @apply overflow-hidden rounded-xl border border-stone-700 bg-[#1c1712] shadow-[0_14px_34px_rgba(0,0,0,0.28)] sm:rounded-2xl;
     aspect-ratio: 4 / 5;
   }
 
   .hero-brief-card {
-    @apply rounded-xl border border-stone-800 bg-[#1a1511] p-4 sm:rounded-[1.5rem] sm:p-6;
+    @apply rounded-lg border border-stone-800 bg-[#1a1511] p-4 sm:p-6;
   }
 
   .metric-card {
@@ -236,7 +236,7 @@
   }
 
   .project-detail-shell {
-    @apply rounded-xl bg-white/[0.03] p-5 backdrop-blur-md border border-white/5 transition-all duration-500 sm:rounded-[1.5rem] sm:p-6 md:rounded-[2rem] md:p-8;
+    @apply rounded-xl bg-white/[0.03] p-5 backdrop-blur-md border border-white/5 transition-all duration-500 sm:p-6 md:p-8;
   }
 
   .project-shell:hover {
@@ -263,7 +263,7 @@
   }
 
   .band-shell {
-    @apply rounded-2xl border border-white/[0.03] bg-black p-5 sm:rounded-[2rem] sm:p-6 md:p-8;
+    @apply rounded-xl border border-white/[0.03] bg-black p-5 sm:p-6 md:p-8;
   }
 
   .skill-pill {
@@ -287,7 +287,7 @@
   }
 
   .reason-card {
-    @apply rounded-xl border border-stone-800 bg-[#181410] p-5 sm:rounded-[1.6rem] sm:p-6;
+    @apply rounded-lg border border-stone-800 bg-[#181410] p-5 sm:p-6;
   }
 
   .info-line {
@@ -295,15 +295,15 @@
   }
 
   .overlay-shell {
-    @apply rounded-2xl border border-stone-700 bg-[#17130f] shadow-[0_32px_90px_rgba(0,0,0,0.5)] sm:rounded-[2rem];
+    @apply rounded-xl border border-stone-700 bg-[#17130f] shadow-[0_32px_90px_rgba(0,0,0,0.5)] sm:rounded-2xl;
   }
 
   .overlay-brief-card {
-    @apply rounded-xl border border-white/[0.03] bg-black p-4 sm:rounded-[1.5rem] sm:p-6;
+    @apply rounded-lg border border-white/[0.03] bg-black p-4 sm:p-6;
   }
 
   .ask-suggestion-card {
-    @apply flex min-h-[90px] flex-col items-start justify-between rounded-xl border border-white/[0.03] bg-[#050505] p-4 text-left text-xs text-slate-300 transition hover:border-amber-300/35 hover:bg-[#0a0a0a] sm:min-h-[110px] sm:rounded-[1.35rem] sm:p-5 sm:text-sm;
+    @apply flex min-h-[90px] flex-col items-start justify-between rounded-lg border border-white/[0.03] bg-[#050505] p-4 text-left text-xs text-slate-300 transition hover:border-amber-300/35 hover:bg-[#0a0a0a] sm:min-h-[110px] sm:p-5 sm:text-sm;
   }
 
   .floating-ai-trigger {
@@ -342,7 +342,7 @@
 
   /* Bento Skill Card Styles */
   .bento-skill-card {
-    @apply relative overflow-hidden rounded-xl border border-white/5 bg-white/[0.01] p-5 transition-all duration-500 hover:border-white/10 hover:bg-white/[0.03] hover:shadow-[0_20px_40px_rgba(0,0,0,0.4)] sm:rounded-[1.5rem] sm:p-6 md:rounded-[2rem] md:p-8;
+    @apply relative overflow-hidden rounded-xl border border-white/5 bg-white/[0.01] p-5 transition-all duration-500 hover:border-white/10 hover:bg-white/[0.03] hover:shadow-[0_20px_40px_rgba(0,0,0,0.4)] sm:p-6 md:p-8;
   }
 
   .skill-chip {
@@ -356,7 +356,7 @@
 
   .achievement-log-card::before {
     content: '';
-    @apply absolute -inset-4 rounded-2xl bg-gradient-to-br from-amber-500/5 to-transparent opacity-0 transition-opacity duration-700 group-hover:opacity-100 sm:-inset-6 sm:rounded-[2rem];
+    @apply absolute -inset-4 rounded-xl bg-gradient-to-br from-amber-500/5 to-transparent opacity-0 transition-opacity duration-700 group-hover:opacity-100 sm:-inset-6 sm:rounded-2xl;
   }
 }
 

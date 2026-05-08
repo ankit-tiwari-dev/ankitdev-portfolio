@@ -1,10 +1,21 @@
 import { AnimatePresence, motion, useMotionValue, useSpring, useScroll, useTransform } from 'framer-motion';
-import { ArrowRight, Bot, BrainCircuit, Code, Download, FileText, Github, Globe, Layers, Layout, Linkedin, Mail, Monitor, Smartphone, Sparkles, Terminal, X, Zap } from 'lucide-react';
+import { ArrowRight, Bot, BrainCircuit, Code, Download, FileText, Github, Globe, Layers, Layout, Linkedin, Mail, Monitor, Smartphone, Sparkles, X } from 'lucide-react';
 import { useEffect, useRef, type ReactNode, useState } from 'react';
 import resumeFile from './assets/Ankittiwari_Resume.pdf';
 import profileImage from './assets/Image.png';
+import leetcodeIcon from './assets/icons8-leetcode-24.png';
 import { portfolioData, type ProjectRecord, type SkillRecord } from './data/portfolio';
 import './index.css';
+
+const LeetCodeLogo = (props: any) => (
+  <img src={leetcodeIcon} alt="LeetCode" className={props.className} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+);
+
+const GFGLogo = (props: any) => (
+  <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+    <path fill="#43a047" d="M29.035,24C29.014,23.671,29,23.339,29,23c0-6.08,2.86-10,7-10c3.411,0,6.33,2.662,7,7l2,0l0.001-9	L43,11c0,0-0.533,1.506-1,1.16c-1.899-1.066-3.723-1.132-6.024-1.132C30.176,11.028,25,16.26,25,22.92	c0,0.364,0.021,0.723,0.049,1.08h-2.099C22.979,23.643,23,23.284,23,22.92c0-6.66-5.176-11.892-10.976-11.892	c-2.301,0-4.125,0.065-6.024,1.132C5.533,12.506,5,11,5,11l-2.001,0L3,20l2,0c0.67-4.338,3.589-7,7-7c4.14,0,7,3.92,7,10	c0,0.339-0.014,0.671-0.035,1H0v2h1.009c1.083,0,1.977,0.861,1.999,1.943C3.046,29.789,3.224,32.006,4,33c1.269,1.625,3,3,8,3	c5.022,0,9.92-4.527,11-10h2c1.08,5.473,5.978,10,11,10c5,0,6.731-1.375,8-3c0.776-0.994,0.954-3.211,0.992-5.057	C45.014,26.861,45.909,26,46.991,26H48v-2H29.035z M11.477,33.73C9.872,33.73,7.322,33.724,7,32	c-0.109-0.583-0.091-2.527-0.057-4.046C6.968,26.867,7.855,26,8.943,26H19C18.206,30.781,15.015,33.73,11.477,33.73z M41,32	c-0.322,1.724-2.872,1.73-4.477,1.73c-3.537,0-6.729-2.949-7.523-7.73h10.057c1.088,0,1.975,0.867,2,1.954	C41.091,29.473,41.109,31.417,41,32z"></path>
+  </svg>
+);
 
 type ProjectExplainState = {
   title: string;
@@ -157,12 +168,12 @@ function App() {
       <main className="relative z-10">
         <section
           id="hero"
-          className="mx-auto max-w-7xl px-4 pb-10 pt-[28px] sm:px-5 sm:pb-14 sm:pt-[34px] md:px-8 md:pb-16 md:pt-[42px] lg:px-10 lg:pt-[49px]"
+          className="mx-auto max-w-7xl px-4 pt-[28px] sm:px-5 sm:pt-[34px] md:px-8 md:pt-[42px] lg:px-10 lg:pt-[49px]"
         >
           <div className="w-full">
             <div className="hero-editorial-shell">
               {/* Header Navigation */}
-              <nav className="flex items-center justify-between border-b border-white/5 pb-4 sm:pb-5">
+              <nav className="flex items-center justify-between mb-12 lg:mb-20">
                 <div>
                   <p className="font-heading text-xs sm:text-sm font-medium uppercase tracking-[0.2em] text-amber-200/80">
                     {portfolioData.identity.name}
@@ -185,95 +196,73 @@ function App() {
                 </div>
               </nav>
 
-              <div className="hero-headline-block">
-                {/* Mobile: Name + Photo side by side */}
-                <div className="flex items-start gap-5 lg:hidden">
-                  <div className="flex-1 min-w-0">
-                    <motion.h1
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.8, delay: 0.08 }}
-                      className="hero-editorial-title"
-                    >
-                      <span className="block">{portfolioData.identity.name}</span>
-                      <span className="hero-editorial-subline">Software Engineer</span>
-                    </motion.h1>
+              <div className="flex-grow lg:grid lg:grid-cols-[1fr_auto] lg:gap-16 lg:items-end">
+                <div className="flex flex-col lg:pb-20">
+                  <div className="hero-headline-block">
+                    {/* Title Area - Shared but responsive */}
+                    <div className="min-w-0">
+                      <motion.h1
+                        initial={{ opacity: 0, y: 28 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.8, delay: 0.08 }}
+                        className="hero-editorial-title text-center lg:text-left"
+                      >
+                        <span className="block">{portfolioData.identity.name}</span>
+                        <span className="hero-editorial-subline">Software Engineer</span>
+                      </motion.h1>
+                    </div>
+
+                    {/* Mobile Only: Large Photo in center */}
+                    <div className="lg:hidden my-8 flex justify-center">
+                      <motion.div
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 0.8, delay: 0.2 }}
+                      >
+                        <HeroPhotoSection profileImage={profileImage} name={portfolioData.identity.name} />
+                      </motion.div>
+                    </div>
+
+                    {/* Description Area */}
+                    <div className="min-w-0">
+                      <motion.p
+                        initial={{ opacity: 0, y: 32 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.8, delay: 0.16 }}
+                        className="hero-editorial-lead text-center lg:text-left"
+                      >
+                        I design and build intelligent digital products with strong backend systems.
+                      </motion.p>
+                      <motion.p
+                        initial={{ opacity: 0, y: 36 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.8, delay: 0.24 }}
+                        className="hero-editorial-copy text-center lg:text-left"
+                      >
+                        {portfolioData.identity.summary}
+                      </motion.p>
+                    </div>
                   </div>
+
                   <motion.div
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.8, delay: 0.2 }}
-                    className="shrink-0"
+                    initial={{ opacity: 0, y: 24 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8, delay: 0.32 }}
+                    className="hero-editorial-actions justify-center lg:justify-start mt-8 lg:mt-auto"
                   >
-                    <HeroPhotoSection profileImage={profileImage} name={portfolioData.identity.name} />
+                    <ActionButton label="View Work" onClick={() => scrollToId('projects')} primary />
+                    <a className="hero-button" href={resumeFile} target="_blank" rel="noreferrer">
+                      Resume
+                      <Download size={16} />
+                    </a>
                   </motion.div>
                 </div>
 
-                {/* Desktop: Full editorial layout */}
-                <div className="hidden lg:grid lg:grid-cols-[minmax(0,1fr)_280px] xl:grid-cols-[minmax(0,1fr)_320px] lg:items-start lg:gap-12 xl:gap-16">
-                  <div className="min-w-0">
-                    <motion.h1
-                      initial={{ opacity: 0, y: 28 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.8, delay: 0.08 }}
-                      className="hero-editorial-title"
-                    >
-                      <span className="block">{portfolioData.identity.name}</span>
-                      <span className="hero-editorial-subline">Software Engineer</span>
-                    </motion.h1>
-                    <motion.p
-                      initial={{ opacity: 0, y: 32 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.8, delay: 0.16 }}
-                      className="hero-editorial-lead"
-                    >
-                      I design and build intelligent digital products with strong backend systems.
-                    </motion.p>
-                    <motion.p
-                      initial={{ opacity: 0, y: 36 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.8, delay: 0.24 }}
-                      className="hero-editorial-copy"
-                    >
-                      {portfolioData.identity.summary}
-                    </motion.p>
-                  </div>
+                {/* Desktop Photo: Anchored to bottom on right */}
+                <div className="hidden lg:block">
                   <HeroPhotoSection profileImage={profileImage} name={portfolioData.identity.name} />
                 </div>
-
-                {/* Mobile: Description below the name+photo row */}
-                <div className="lg:hidden mt-6">
-                  <motion.p
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, delay: 0.16 }}
-                    className="hero-editorial-lead"
-                  >
-                    I design and build intelligent digital products with strong backend systems.
-                  </motion.p>
-                  <motion.p
-                    initial={{ opacity: 0, y: 24 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, delay: 0.24 }}
-                    className="hero-editorial-copy"
-                  >
-                    {portfolioData.identity.summary}
-                  </motion.p>
-                </div>
               </div>
-
-              <motion.div
-                initial={{ opacity: 0, y: 24 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.32 }}
-                className="hero-editorial-actions"
-              >
-                <ActionButton label="View Work" onClick={() => scrollToId('projects')} primary />
-                <a className="hero-button" href={resumeFile} target="_blank" rel="noreferrer">
-                  Resume
-                  <Download size={16} />
-                </a>
-              </motion.div>
 
               <div className="hero-foot-row">
                 <div className="hero-foot-note">
@@ -388,7 +377,7 @@ function App() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
-                className="group relative overflow-hidden rounded-xl border border-white/5 bg-white/[0.01] p-5 transition-all duration-500 hover:border-amber-400/30 hover:bg-white/[0.03] sm:rounded-[2rem] sm:p-8"
+                className="group relative overflow-hidden rounded-lg border border-white/5 bg-white/[0.01] p-5 transition-all duration-500 hover:border-amber-400/30 hover:bg-white/[0.03] sm:rounded-xl sm:p-8"
               >
                 <div className="flex flex-col h-full">
                   <div className="flex items-center justify-between">
@@ -446,7 +435,7 @@ function App() {
               href={resumeFile} 
               target="_blank" 
               rel="noreferrer"
-              className="group relative overflow-hidden rounded-[2rem] border border-white/10 bg-white/[0.02] p-6 sm:p-8 transition-all hover:border-amber-400/30 hover:bg-white/[0.04]"
+              className="group relative overflow-hidden rounded-xl border border-white/10 bg-white/[0.02] p-6 sm:p-8 transition-all hover:border-amber-400/30 hover:bg-white/[0.04]"
             >
               <div className="flex items-center justify-between mb-6 sm:mb-8">
                 <div className="flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-xl sm:rounded-2xl bg-amber-500/10 text-amber-500 group-hover:scale-110 transition-transform duration-500">
@@ -454,18 +443,18 @@ function App() {
                 </div>
                 <ArrowRight size={18} className="-rotate-45 text-slate-700 group-hover:text-amber-400 transition-colors" />
               </div>
-              <h3 className="font-heading text-lg sm:text-xl font-medium text-white">resume_archive</h3>
+              <h3 className="font-heading text-lg sm:text-xl font-medium text-white">Resume</h3>
               <p className="mt-2 text-[10px] sm:text-xs text-slate-500 uppercase tracking-widest">Download Full CV</p>
             </a>
 
             {portfolioData.contact.map((item) => {
               const configMap: Record<string, { icon: any; color: string; bg: string; border: string }> = {
-                'resume_archive': { icon: FileText, color: 'text-amber-500', bg: 'bg-amber-500/10', border: 'hover:border-amber-500/30' },
-                'github_access': { icon: Github, color: 'text-white', bg: 'bg-white/5', border: 'hover:border-white/30' },
-                'linkedin_sync': { icon: Linkedin, color: 'text-[#0077b5]', bg: 'bg-[#0077b5]/10', border: 'hover:border-[#0077b5]/30' },
-                'leetcode_metrics': { icon: Code, color: 'text-[#ffa116]', bg: 'bg-[#ffa116]/10', border: 'hover:border-[#ffa116]/30' },
-                'hackerrank_identity': { icon: Terminal, color: 'text-[#2ec866]', bg: 'bg-[#2ec866]/10', border: 'hover:border-[#2ec866]/30' },
-                'email_direct': { icon: Mail, color: 'text-amber-400', bg: 'bg-amber-400/10', border: 'hover:border-amber-400/30' }
+                'Resume': { icon: FileText, color: 'text-amber-500', bg: 'bg-amber-500/10', border: 'hover:border-amber-500/30' },
+                'GitHub': { icon: Github, color: 'text-white', bg: 'bg-white/5', border: 'hover:border-white/30' },
+                'LinkedIn': { icon: Linkedin, color: 'text-[#0077b5]', bg: 'bg-[#0077b5]/10', border: 'hover:border-[#0077b5]/30' },
+                'LeetCode': { icon: LeetCodeLogo, color: 'text-[#ffa116]', bg: 'bg-[#ffa116]/10', border: 'hover:border-[#ffa116]/30' },
+                'GeeksforGeeks': { icon: GFGLogo, color: 'text-[#2ec866]', bg: 'bg-[#2ec866]/10', border: 'hover:border-[#2ec866]/30' },
+                'Email': { icon: Mail, color: 'text-amber-400', bg: 'bg-amber-400/10', border: 'hover:border-amber-400/30' }
               };
               
               const config = configMap[item.label] || { icon: Sparkles, color: 'text-slate-400', bg: 'bg-white/5', border: 'hover:border-white/20' };
@@ -478,7 +467,7 @@ function App() {
                   href={item.href}
                   target="_blank"
                   rel="noreferrer"
-                  className={`group relative overflow-hidden rounded-[2rem] border border-white/5 bg-white/[0.01] p-6 sm:p-8 transition-all ${config.border} hover:bg-white/[0.03]`}
+                  className={`group relative overflow-hidden rounded-xl border border-white/5 bg-white/[0.01] p-6 sm:p-8 transition-all ${config.border} hover:bg-white/[0.03]`}
                 >
                   <div className="flex items-center justify-between mb-6 sm:mb-8">
                     <div className={`flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-xl sm:rounded-2xl ${config.bg} ${config.color} group-hover:scale-110 transition-transform duration-500`}>
@@ -511,7 +500,7 @@ function App() {
               <p className="text-base leading-8 text-slate-300">{projectExplain.summary}</p>
               <div className="grid gap-4">
                 {projectExplain.details.map((detail) => (
-                  <div key={detail.label} className="rounded-2xl border border-white/10 bg-black/20 p-5">
+                  <div key={detail.label} className="rounded-xl border border-white/10 bg-black/20 p-5">
                     <p className="text-xs uppercase tracking-[0.28em] text-slate-500">{detail.label}</p>
                     <p className="mt-3 text-sm leading-7 text-slate-300">{detail.value}</p>
                   </div>
@@ -699,68 +688,134 @@ function BackgroundScene({ isPaused }: { isPaused: boolean }) {
 }
 
 function WelcomeScreen({ onEnter }: { onEnter: () => void }) {
-  const [bootStep, setBootStep] = useState(0);
-  const bootLines = [
-    "[SYSTEM] Checking core nodes...",
-    "[BOOT] Synchronizing architecture...",
-    "[SYNC] Intelligence Layer online...",
-    "[AUTH] Engineering identity verified.",
-    "Initialization Complete."
+  const [isActivated, setIsActivated] = useState(false);
+  
+  const stats = [
+    { label: "COGNITION", value: "98%" },
+    { label: "SYSTEMS", value: "99%" },
+    { label: "CRAFT", value: "95%" }
   ];
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setBootStep(prev => (prev < bootLines.length - 1 ? prev + 1 : prev));
-    }, 600);
-    return () => clearInterval(timer);
-  }, []);
 
   return (
     <motion.div
       initial={{ opacity: 1 }}
-      exit={{ opacity: 0, transition: { duration: 0.8, ease: 'easeInOut' } }}
-      className="fixed inset-0 z-[70] flex flex-col items-center justify-center bg-[#050505] p-6"
+      exit={{ 
+        opacity: 0, 
+        scale: 1.2,
+        filter: "blur(20px)",
+        transition: { duration: 1.5, ease: [0.76, 0, 0.24, 1] } 
+      }}
+      className="fixed inset-0 z-[70] flex items-center justify-center bg-[#020408] overflow-hidden"
     >
-      <div className="w-full max-w-xl">
-        <div className="flex items-center gap-3 mb-10">
-          <div className="h-2 w-2 rounded-full bg-amber-500 animate-pulse shadow-[0_0_8px_rgba(245,158,11,0.8)]" />
-          <p className="font-mono text-[10px] uppercase tracking-[0.5em] text-amber-200/40">Terminal Initialization</p>
-        </div>
+      {/* Background Ambience */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(245,158,11,0.03),transparent_70%)]" />
+        <div className="absolute top-0 left-0 w-full h-full opacity-10" style={{ backgroundImage: 'radial-gradient(#ffffff10 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
+      </div>
 
-        <div className="space-y-4 font-mono">
-          {bootLines.slice(0, bootStep + 1).map((line, i) => (
-            <motion.div 
-              key={i}
-              initial={{ opacity: 0, x: -10 }}
-              animate={{ opacity: 1, x: 0 }}
-              className="flex items-center gap-4 text-xs sm:text-sm"
-            >
-              <span className="text-slate-700">0{i + 1}</span>
-              <span className={i === bootLines.length - 1 ? "text-amber-200" : "text-slate-400"}>
-                {line}
-              </span>
-            </motion.div>
-          ))}
-        </div>
-
-        {bootStep === bootLines.length - 1 && (
+      <AnimatePresence>
+        {!isActivated ? (
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="mt-20 pt-10 border-t border-white/5"
+            key="idle"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0, scale: 0.5, filter: "blur(10px)" }}
+            className="relative flex flex-col items-center"
           >
-            <h1 className="font-heading text-4xl sm:text-6xl font-medium tracking-tight text-white mb-8">
-              Ankit Tiwari <span className="text-amber-500/20">.sys</span>
-            </h1>
-            <button
-              onClick={onEnter}
-              className="group flex items-center gap-4 rounded-full border border-amber-500/20 bg-amber-500/5 px-8 py-4 text-sm text-amber-200 transition-all hover:border-amber-500/50 hover:bg-amber-500/10"
+            <motion.button
+              onClick={() => setIsActivated(true)}
+              whileHover={{ scale: 1.2 }}
+              whileTap={{ scale: 0.9 }}
+              className="group relative flex items-center justify-center w-24 h-24"
             >
-              <span>Initialize Environment</span>
-              <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
-            </button>
+              <div className="absolute inset-0 rounded-full border border-amber-500/20 group-hover:border-amber-500/50 transition-colors animate-ping" />
+              <div className="absolute inset-2 rounded-full border border-amber-500/40 group-hover:border-amber-500/80 transition-colors" />
+              <div className="h-2 w-2 rounded-full bg-amber-500 shadow-[0_0_20px_rgba(245,158,11,1)]" />
+            </motion.button>
+            <motion.p 
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: [0, 1, 0.5] }}
+              transition={{ duration: 2, repeat: Infinity }}
+              className="mt-8 text-[10px] uppercase tracking-[1em] text-amber-200/40 font-mono"
+            >
+              Initiate System
+            </motion.p>
+          </motion.div>
+        ) : (
+          <motion.div
+            key="active"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="relative z-10 w-full max-w-5xl px-6 flex flex-col items-center"
+          >
+            {/* Split Aperture Animation */}
+            <motion.div 
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              transition={{ duration: 1, ease: [0.76, 0, 0.24, 1] }}
+              className="overflow-hidden w-full flex flex-col items-center"
+            >
+              <div className="mb-2 w-px h-24 bg-gradient-to-t from-amber-500 to-transparent" />
+              
+              <motion.div
+                initial={{ letterSpacing: "2em", opacity: 0, y: 20 }}
+                animate={{ letterSpacing: "0.8em", opacity: 1, y: 0 }}
+                transition={{ duration: 1.5, delay: 0.2, ease: "easeOut" }}
+                className="text-center"
+              >
+                <h1 className="font-heading text-4xl sm:text-7xl font-light text-white uppercase tracking-[1em]">
+                  ANKIT <span className="text-amber-500">TIWARI</span>
+                </h1>
+                <p className="mt-6 text-xs text-slate-500 uppercase tracking-[1.5em] font-mono">Software Architect</p>
+              </motion.div>
+
+              <div className="mt-16 grid grid-cols-1 sm:grid-cols-3 gap-12 sm:gap-24">
+                {stats.map((stat, i) => (
+                  <motion.div
+                    key={stat.label}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.8 + (i * 0.1) }}
+                    className="flex flex-col items-center"
+                  >
+                    <span className="text-[10px] text-slate-600 uppercase tracking-widest mb-2 font-mono">{stat.label}</span>
+                    <span className="text-2xl font-light text-amber-200 font-mono">{stat.value}</span>
+                    <div className="mt-4 w-12 h-px bg-white/10" />
+                  </motion.div>
+                ))}
+              </div>
+
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 1.5 }}
+                className="mt-24"
+              >
+                <motion.button
+                  whileHover={{ scale: 1.05, letterSpacing: "0.6em" }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={onEnter}
+                  className="px-16 py-6 border border-white/10 rounded-full text-white text-[10px] uppercase tracking-[0.4em] hover:bg-white hover:text-black transition-all duration-500 backdrop-blur-xl"
+                >
+                  Enter Environment
+                </motion.button>
+              </motion.div>
+
+              <div className="mt-12 w-px h-24 bg-gradient-to-b from-amber-500 to-transparent" />
+            </motion.div>
           </motion.div>
         )}
+      </AnimatePresence>
+
+      {/* Decorative Geometric Lines */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-20">
+        <motion.div 
+          animate={{ rotate: 360 }}
+          transition={{ duration: 100, repeat: Infinity, ease: "linear" }}
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[150%] h-[150%] border border-white/5 rounded-full" 
+        />
+        <div className="absolute top-1/2 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+        <div className="absolute left-1/2 top-0 w-px h-full bg-gradient-to-b from-transparent via-white/10 to-transparent" />
       </div>
     </motion.div>
   );
@@ -867,7 +922,7 @@ function ProjectCard({
               </p>
             </div>
 
-            <div className="rounded-xl border border-white/5 bg-white/[0.02] p-4 backdrop-blur-sm sm:rounded-[1.5rem] sm:p-6 md:rounded-[1.8rem] md:p-8">
+            <div className="rounded-lg border border-white/5 bg-white/[0.02] p-4 backdrop-blur-sm sm:rounded-xl sm:p-6 md:p-8">
               <p className="text-[10px] uppercase tracking-[0.3em] text-slate-500">Architecture Summary</p>
               <p className="mt-5 text-base leading-relaxed text-slate-400">
                 {project.summary}
@@ -1023,35 +1078,39 @@ function ProjectCard({
 
 function HeroPhotoSection({ profileImage, name }: { profileImage: string; name: string }) {
   return (
-    <div className="group lg:max-w-[300px]">
-      <div className="relative mx-auto flex items-center justify-center h-[120px] w-[120px] sm:h-[160px] sm:w-[160px] lg:h-[260px] lg:w-[260px]">
+    <div className="group relative lg:max-w-[440px]">
+      <div className="relative mx-auto flex items-center justify-center h-[380px] w-[250px] sm:h-[450px] sm:w-[300px] lg:h-[650px] lg:w-[420px]">
         
-        {/* Animated Gradient Blob Background */}
-        <div className="absolute inset-2 lg:inset-4 liquid-blob bg-gradient-to-tr from-amber-500 via-orange-400 to-amber-200 opacity-70 blur-md transition-all duration-700 group-hover:scale-105 group-hover:opacity-100 group-hover:blur-lg" />
-        
-        {/* Secondary Blob for extra color depth */}
-        <div className="absolute inset-3 lg:inset-6 liquid-blob-secondary bg-gradient-to-bl from-amber-300 to-orange-500 opacity-60 mix-blend-screen transition-all duration-700 group-hover:scale-110" />
+        {/* Engineering Grid Background - Very subtle */}
+        <div className="absolute inset-0 opacity-[0.03] pointer-events-none transition-opacity duration-700 group-hover:opacity-[0.07]">
+          <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <pattern id="smallGrid" width="10" height="10" patternUnits="userSpaceOnUse">
+                <path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(245, 158, 11, 0.4)" strokeWidth="0.5"/>
+              </pattern>
+              <pattern id="grid" width="50" height="50" patternUnits="userSpaceOnUse">
+                <rect width="50" height="50" fill="url(#smallGrid)"/>
+                <path d="M 50 0 L 0 0 0 50" fill="none" stroke="rgba(245, 158, 11, 0.7)" strokeWidth="1"/>
+              </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#grid)" />
+          </svg>
+        </div>
 
-        {/* Inner Image Blob */}
-        <div className="relative z-10 h-[100px] w-[100px] sm:h-[130px] sm:w-[130px] lg:h-[220px] lg:w-[220px] overflow-hidden liquid-blob-inner border-[2px] sm:border-[3px] border-white/20 bg-[#1c1712] shadow-[0_20px_40px_rgba(0,0,0,0.4)]">
+        {/* Photo Container - Clean Rectangle, Increased Height */}
+        <div className="relative z-10 w-full h-full overflow-hidden bg-[#050505] transition-all duration-700 border border-white/5 group-hover:border-white/10">
           <img
             src={profileImage}
             alt={`${name} portrait`}
-            className="h-full w-full object-cover transition-transform duration-1000 group-hover:scale-110"
+            className="h-full w-full object-cover grayscale brightness-[0.8] scale-[0.9] transition-all duration-1000 ease-out group-hover:grayscale-0 group-hover:brightness-100"
           />
-          <div className="absolute inset-0 bg-amber-500/10 mix-blend-overlay opacity-0 transition-opacity duration-700 group-hover:opacity-100" />
+          
+          {/* Subtle Corner Accents - Minimal "Engineered" feel only on hover */}
+          <div className="absolute top-0 left-0 w-6 h-6 border-t border-l border-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+          <div className="absolute top-0 right-0 w-6 h-6 border-t border-r border-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+          <div className="absolute bottom-0 left-0 w-6 h-6 border-b border-l border-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+          <div className="absolute bottom-0 right-0 w-6 h-6 border-b border-r border-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
         </div>
-
-      </div>
-
-      {/* Info card - only on desktop */}
-      <div className="hidden lg:block mt-6 rounded-[1.35rem] border border-stone-900 bg-[#0a0a0a] px-5 py-5 transition-colors duration-500 group-hover:border-amber-400/30">
-        <p className="font-heading text-xs uppercase tracking-[0.28em] text-slate-500">
-          Organic Identity
-        </p>
-        <p className="mt-3 text-sm leading-relaxed text-slate-400">
-          Fluid structure. Hover to intensify the motion.
-        </p>
       </div>
     </div>
   );
@@ -1175,7 +1234,7 @@ function SkillCard({ band, index }: { band: any; index: number }) {
               <p className="text-[10px] uppercase tracking-widest text-slate-500">Module {index + 1}</p>
             </div>
           </div>
-          <Zap size={14} className="text-white/10 group-hover:text-amber-400/50 transition-colors" />
+
         </div>
 
         <div className="mt-8 flex flex-wrap gap-2">
@@ -1234,7 +1293,7 @@ function AchievementNode({ item, index }: { item: any; index: number }) {
             {item.organization}
           </p>
           
-          <div className={`mt-4 p-3 rounded-lg border border-white/5 bg-white/[0.02] text-xs leading-relaxed text-slate-400 group-hover:bg-white/[0.04] transition-all sm:mt-6 sm:p-4 sm:rounded-xl sm:text-sm ${isEven ? 'md:ml-auto' : 'md:mr-auto'}`}>
+          <div className={`mt-4 p-3 rounded-md border border-white/5 bg-white/[0.02] text-xs leading-relaxed text-slate-400 group-hover:bg-white/[0.04] transition-all sm:mt-6 sm:p-4 sm:rounded-lg sm:text-sm ${isEven ? 'md:ml-auto' : 'md:mr-auto'}`}>
             {item.description}
             <div className="mt-3 pt-3 border-t border-white/5 flex items-center gap-2 text-[9px] uppercase tracking-widest text-slate-600 sm:mt-4 sm:pt-4 sm:gap-3 sm:text-[10px]">
               <Sparkles size={12} className="text-amber-500/40" />
