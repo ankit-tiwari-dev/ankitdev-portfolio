@@ -29,6 +29,11 @@ export type ProjectRecord = {
     challenges_solved: string[];
     ai_integration?: string;
   };
+  isRestricted?: boolean;
+  thumbnail?: string;
+  images?: string[];
+  category: string[];
+  featured?: boolean;
 };
 
 export type SkillRecord = {
@@ -119,6 +124,10 @@ export const portfolioData = {
         live: 'https://career-path-aii.vercel.app',
       },
       flow: ['User input', 'Assessment engine', 'Recommendation logic', 'Progress dashboard'],
+      thumbnail: 'cp_dash',
+      images: ['cp_dash', 'cp_roadmap', 'cp_profile_dark', 'cp_profile_light'],
+      category: ['AI/ML', 'Full Stack', 'React'],
+      featured: true,
       deep_specs: {
         architecture: 'Modular Monolith with a clear separation between the Express API and the Reasoning Layer.',
         tech_rationale: 'React 19 was chosen for its improved concurrent rendering, which keeps the AI chat interface fluid during heavy data processing.',
@@ -155,7 +164,12 @@ export const portfolioData = {
         github: 'https://github.com/ankit-tiwari-dev/SafeSpend-Smart-Finance-Tracker',
         live: 'https://safespend-pro.vercel.app',
       },
+      isRestricted: true,
       flow: ['Transaction input', 'Validation and auth', 'Analytics engine', 'User decisions'],
+      thumbnail: 'ss_inflow',
+      images: ['ss_inflow', 'ss_budgeting', 'ss_targets', 'ss_analytics', 'ss_transactions', 'ss_targets_dark'],
+      category: ['FinTech', 'Full Stack', 'Backend'],
+      featured: true,
       deep_specs: {
         architecture: 'Client-Server architecture with JWT-based session management and MongoDB persistence.',
         tech_rationale: 'Node.js/Express was used for the backend to handle high-frequency transaction updates with minimal overhead.',
@@ -191,7 +205,12 @@ export const portfolioData = {
         github: 'https://github.com/ankit-tiwari-dev/Medicine-Resale-Platform',
         live: 'https://medicine-resale-platform.vercel.app',
       },
+      isRestricted: true,
       flow: ['Image upload', 'OCR and scoring', 'Admin and rider verification', 'Approved listing'],
+      thumbnail: 'med_admin',
+      images: ['med_admin', 'med_inventory', 'med_ledger', 'med_users', 'med_cart', 'med_orders', 'med_payment'],
+      category: ['HealthTech', 'AI/ML', 'Full Stack'],
+      featured: true,
       deep_specs: {
         architecture: 'Event-driven commerce flow with multi-role state management.',
         tech_rationale: 'Tesseract.js was integrated for client-side OCR to reduce server load for initial verification gates.',
@@ -228,7 +247,10 @@ export const portfolioData = {
         github: 'https://github.com/ankit-tiwari-dev/Email-Job-Scheduler',
         live: 'https://email-job-scheduler-chi.vercel.app/',
       },
+      thumbnail: 'email_dash',
+      images: ['email_dash', 'email_history', 'email_logs', 'email_view', 'email_summary'],
       flow: ['Job creation', 'Queue persistence', 'Worker processing', 'Delivery tracking'],
+      category: ['Backend', 'Infrastructure'],
       deep_specs: {
         architecture: 'Worker-pool architecture using BullMQ and Redis for high-reliability job scheduling.',
         tech_rationale: 'BullMQ was chosen for its robust retry logic and delayed job capabilities, essential for transactional emails.',
@@ -263,6 +285,8 @@ export const portfolioData = {
       links: {
         github: 'https://github.com/ankit-tiwari-dev/ankitdev-portfolio',
       },
+      thumbnail: 'system_explorer_thumbnail',
+      category: ['Full Stack', 'React', 'Frontend'],
       flow: ['Kinetic Gallery', 'Scroll-Linked Motion', 'Live Viewports', 'Automated Previews'],
     },
   ] satisfies ProjectRecord[],

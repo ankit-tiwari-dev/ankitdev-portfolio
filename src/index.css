@@ -3,7 +3,36 @@
 @import 'tailwindcss/utilities';
 
 @layer base {
-  :root {
+  /* Premium Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #020408;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(245, 158, 11, 0.1);
+  border-radius: 10px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+  transition: all 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(245, 158, 11, 0.4);
+  border: 1px solid transparent;
+}
+
+/* Firefox Support */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(245, 158, 11, 0.2) #020408;
+}
+
+:root {
     color-scheme: dark;
   }
 
@@ -69,6 +98,25 @@
 
   .hero-button-primary {
     @apply border-amber-300/40 bg-amber-200 text-stone-950 shadow-[0_16px_40px_rgba(245,158,11,0.16)];
+  }
+
+  .blueprint-grid {
+    background-image: 
+      linear-gradient(rgba(245, 158, 11, 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(245, 158, 11, 0.05) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+
+  .coordinate-marker {
+    @apply absolute text-[8px] font-mono text-amber-500/30 tracking-tighter uppercase;
+  }
+
+  .tech-card {
+    @apply relative overflow-hidden bg-white/[0.01] border border-white/5 rounded-xl p-6 transition-all duration-500 hover:border-amber-500/30 hover:bg-white/[0.03];
+  }
+
+  .project-blueprint {
+    @apply relative border border-white/5 rounded-xl overflow-hidden bg-[#050505];
   }
 
   .project-shell {
