@@ -73,26 +73,26 @@ export type ContactRecord = {
 export const portfolioData = {
   identity: {
     name: 'Ankit Tiwari',
-    role: 'Full Stack Developer + AI Enthusiast',
-    focus: 'AI Systems + Full-Stack Product Engineering',
+    role: 'Full Stack Developer',
+    focus: 'Full-Stack Development & AI Integration',
     location: 'India',
-    availability: 'Open to software engineering and AI product roles',
+    availability: 'Available for Software Engineering Roles',
     summary:
-      'A BCA graduate specializing in MERN stack and AI-powered systems. I build production-ready software where backend reliability, intelligent layers, and clean architecture converge.',
+      'I build reliable, high-performance web applications with a focus on clean architecture and smart features. My goal is to transform complex problems into user-friendly digital products.',
   },
   stats: [
     { label: 'REST APIs Built', value: '60+' },
-    { label: 'Skill Nodes', value: '25+' },
+    { label: 'Technical Skills', value: '25+' },
     { label: 'Achievements', value: '05+' },
   ],
   commandCenter: {
     placeholder: 'Query the portfolio system. Example: /projects or "show AI work"',
     commands: [
       { id: '/projects', label: 'Projects', prompt: 'Show projects', module: 'projects' as ModuleKey },
-      { id: '/skills', label: 'Skills', prompt: 'Show skill matrix', module: 'skills' as ModuleKey },
+      { id: '/skills', label: 'Skills', prompt: 'Show skills', module: 'skills' as ModuleKey },
       { id: '/achievements', label: 'Achievements', prompt: 'Show achievements', module: 'achievements' as ModuleKey },
       { id: '/why-hire-me', label: 'Why Hire Me', prompt: 'Why hire Ankit?', module: 'why-hire' as ModuleKey },
-      { id: '/contact', label: 'Contact', prompt: 'Show contact channels', module: 'contact' as ModuleKey },
+      { id: '/contact', label: 'Contact', prompt: 'Show contact info', module: 'contact' as ModuleKey },
       { id: '/explore', label: 'Explore Me', prompt: 'Guide me through the portfolio', module: 'dashboard' as ModuleKey },
     ],
   },
@@ -100,12 +100,12 @@ export const portfolioData = {
     {
       id: 'careerpath-ai',
       title: 'CareerPath AI',
-      strapline: 'AI-guided career decision engine',
-      summary: 'Assesses skills, maps gaps, and recommends learning paths with an AI-backed decision layer.',
+      strapline: 'AI-Powered Career Planning Platform',
+      summary: 'An intelligent platform that helps users map their skills and find the best learning paths for their careers.',
       description:
-        'A product-style career intelligence platform that combines assessment logic, adaptive recommendations, and admin visibility into user progress.',
-      impact: 'Turns a generic guidance workflow into a measurable recommendation system.',
-      status: 'Live system',
+        'A full-stack career intelligence tool that uses AI to analyze skills, suggest personalized roadmaps, and provide a clear dashboard for tracking progress.',
+      impact: 'Simplifies career decision-making through personalized, data-driven recommendations.',
+      status: 'Live',
       year: '2025',
       stack: ['React 19', 'Vite', 'Node.js', 'Express', 'MongoDB', 'Groq Llama', 'Razorpay', 'OAuth 2.0'],
       features: [
@@ -141,12 +141,12 @@ export const portfolioData = {
     {
       id: 'safespend',
       title: 'SafeSpend',
-      strapline: 'Finance operating surface with insight loops',
-      summary: 'Tracks spending, exposes patterns, and helps users act on financial behavior with clear analytics.',
+      strapline: 'Smart Finance & Expense Tracker',
+      summary: 'A secure application that helps users track their spending, set budgets, and visualize their financial habits.',
       description:
-        'A polished finance product built with strong security posture, realtime visual summaries, and AI-assisted trend interpretation.',
-      impact: 'Converts raw transaction tracking into a more actionable financial control system.',
-      status: 'Live system',
+        'A polished finance tool featuring real-time analytics, secure session management, and helpful insights into spending trends.',
+      impact: 'Provides users with a clear and secure way to manage their personal finances.',
+      status: 'Live',
       year: '2025',
       stack: ['React', 'Tailwind CSS', 'Node.js', 'Express', 'MongoDB', 'JWT', 'OAuth 2.0', 'Recharts'],
       features: [
@@ -181,13 +181,13 @@ export const portfolioData = {
     },
     {
       id: 'medicine-resale',
-      title: 'Medicine Resale Platform',
-      strapline: 'Verification-heavy healthcare marketplace flow',
-      summary: 'Uses AI-assisted OCR plus operational checks to validate medicine resale before listing.',
+      title: 'Medicine Marketplace',
+      strapline: 'Secure & Verified Healthcare Marketplace',
+      summary: 'A platform for safely reselling medicines using AI to verify prescriptions and ensure listing accuracy.',
       description:
-        'A multi-stage commerce workflow with verification gates, rider operations, admin approval, and wallet settlement logic.',
-      impact: 'Introduces traceability and rule enforcement into a trust-sensitive resale scenario.',
-      status: 'Live system',
+        'A marketplace workflow featuring multi-step verification, admin approval gates, and a secure payment system.',
+      impact: 'Brings safety and trust to the process of reselling unused medications.',
+      status: 'Live',
       year: '2025',
       stack: ['React', 'Node.js', 'Express', 'MongoDB', 'Groq Vision', 'Tesseract.js', 'Razorpay'],
       features: [
@@ -223,13 +223,13 @@ export const portfolioData = {
     },
     {
       id: 'email-job-scheduler',
-      title: 'Email Job Scheduler',
-      strapline: 'Reliable queue-first outbound delivery system',
-      summary: 'Schedules and executes bulk email jobs with persistence, rate control, and worker concurrency.',
+      title: 'Bulk Email Scheduler',
+      strapline: 'High-Performance Email Delivery System',
+      summary: 'A reliable backend system for scheduling and sending bulk emails with rate control and error handling.',
       description:
-        'A backend-heavy system designed around job durability, queue throughput, and controlled dispatch behavior.',
-      impact: 'Shows strong backend thinking around reliability, workers, and operational safety.',
-      status: 'Live system',
+        'A backend-focused project designed for job durability, featuring a queue-based architecture to handle high-volume email delivery safely.',
+      impact: 'Ensures reliable email delivery through professional queuing and error management.',
+      status: 'Live',
       year: '2025',
       stack: ['Next.js 14', 'TypeScript', 'BullMQ', 'Redis', 'PostgreSQL', 'Prisma'],
       features: [
@@ -262,13 +262,13 @@ export const portfolioData = {
     },
     {
       id: 'system-explorer',
-      title: 'System Explorer Portfolio',
-      strapline: 'High-Performance Portfolio with Live Viewport Architecture',
-      summary: 'Redesigned as an immersive kinetic gallery with deep contrast aesthetics and automated live system previews.',
+      title: 'Modern Portfolio',
+      strapline: 'Interactive & High-Performance Developer Portfolio',
+      summary: 'An immersive kinetic gallery designed to showcase my projects with premium animations and live previews.',
       description:
-        'This version 2.0 overhaul integrates framer-motion for scroll-linked parallax, a premium midnight-black design system, and an automated iframe-based preview system for instant project interaction.',
-      impact: 'Demonstrates high-end interface engineering, performance optimization, and interactive product storytelling.',
-      status: 'Current build',
+        'My current portfolio built with a focus on smooth interactions, a clean dark aesthetic, and instant project interaction.',
+      impact: 'Demonstrates modern web engineering, performance optimization, and professional storytelling.',
+      status: 'Current Build',
       year: '2026',
       stack: ['React 19', 'Framer Motion', 'TypeScript', 'Tailwind CSS', 'Vite', 'Lucide React'],
       features: [
@@ -605,8 +605,8 @@ export const portfolioData = {
       organization: 'Bhagwan Mahavir University',
       date: 'November 2024',
       type: 'award',
-      description: 'Built a technology-led solution focused on campus sustainability.',
-      outcome: 'Demonstrated product framing and applied problem solving under evaluation.',
+      description: 'Engineered a sustainable technology framework for campus-wide resource management.',
+      outcome: 'Secured top honors for product-market fit and architectural viability.',
     },
     {
       id: 'innovate-hackathon',
@@ -614,8 +614,8 @@ export const portfolioData = {
       organization: 'Bhagwan Mahavir College of Computer Application',
       date: 'March 2025',
       type: 'award',
-      description: 'Developed an app concept connecting students to volunteer opportunities.',
-      outcome: 'Showed speed, collaboration, and delivery under time pressure.',
+      description: 'Collaborative development of a digital ecosystem for volunteer mobilization.',
+      outcome: 'Validated high-velocity delivery and agile adaptability within a competitive window.',
     },
     {
       id: 'mindstorm',
@@ -647,54 +647,54 @@ export const portfolioData = {
   ] satisfies AchievementRecord[],
   expertise: [
     {
-      title: 'Backend Architecture',
-      description: 'Designing scalable microservices and monolithic systems with robust error handling and logging.',
-      skills: ['Node.js', 'Express', 'BullMQ', 'Redis']
+      title: 'Backend Systems',
+      description: 'Building scalable server-side applications with strong error handling and efficient data processing.',
+      skills: ['Node.js', 'Express', 'BullMQ', 'Middleware']
     },
     {
-      title: 'Auth & Security',
-      description: 'Implementing high-security flows using JWT, OAuth2, and multi-factor OTP verification systems.',
-      skills: ['JWT', 'Bcrypt', 'Passport.js', 'OTP Systems']
+      title: 'Security & Auth',
+      description: 'Implementing secure user authentication using modern standards and multi-factor verification.',
+      skills: ['JWT', 'OAuth 2.0', 'Bcrypt', 'OTP Auth']
     },
     {
       title: 'Database Design',
-      description: 'Architecting MongoDB schemas with proper indexing, aggregation pipelines, and data normalization.',
-      skills: ['MongoDB', 'Mongoose', 'Aggregation', 'Indexing']
+      description: 'Designing efficient database schemas and optimizing queries for high-performance data storage.',
+      skills: ['MongoDB', 'Schema Design', 'Indexing', 'PostgreSQL']
     },
     {
       title: 'AI Integration',
-      description: 'Embedding LLMs and Computer Vision into products to automate complex decision-making and data extraction.',
-      skills: ['Groq', 'Llama 3', 'Tesseract.js', 'Prompt Engineering']
+      description: 'Integrating smart features and AI models into applications to automate tasks and improve user experience.',
+      skills: ['LLMs', 'Prompt Design', 'OCR Pipelines', 'AI Workflows']
     },
     {
-      title: 'System Optimization',
-      description: 'Improving performance through rate limiting, caching, and efficient resource management.',
-      skills: ['Rate Limiting', 'Redis Caching', 'Pagination', 'Lighthouse']
+      title: 'System Performance',
+      description: 'Optimizing application speed and reliability through caching, rate limiting, and resource management.',
+      skills: ['Redis Caching', 'Rate Limiting', 'Pagination', 'Optimization']
     },
     {
       title: 'Modern Frontend',
-      description: 'Building responsive, high-performance interfaces with motion-driven UX and state management.',
-      skills: ['React', 'Framer Motion', 'Tailwind CSS', 'Redux/Context']
+      description: 'Creating responsive, fast-loading user interfaces with smooth animations and clean design.',
+      skills: ['React', 'Framer Motion', 'Tailwind', 'Responsive UI']
     }
   ],
   journey: [
     {
-      year: '2022',
+      year: '2023-2024',
       title: 'The Foundation',
       description: 'Started Bachelor of Computer Applications (BCA), diving deep into C, Java, and Database fundamentals.'
     },
     {
-      year: '2023',
+      year: '2023-2024',
       title: 'MERN Stack Mastery',
       description: 'Built 20+ full-stack projects, mastering the transition from frontend design to complex backend logic.'
     },
     {
-      year: '2024',
-      title: 'AI Convergence',
-      description: 'Integrated LLMs into production-grade apps like CareerPath AI, winning the BMU Design Thinking Competition.'
+      year: '2024-2025',
+      title: 'Product Innovation',
+      description: 'Won the BMU Design Thinking challenge by architecting a sustainable campus system, signaling a pivot toward product-first engineering.'
     },
     {
-      year: '2025',
+      year: '2025+',
       title: 'Engineering Scale',
       description: 'Architected high-concurrency systems using BullMQ and Redis for asynchronous job scheduling.'
     }
@@ -725,12 +725,12 @@ export const portfolioData = {
     { label: 'Email', value: 'ankit827691@gmail.com', href: 'mailto:ankit827691@gmail.com' },
   ],
   careerKnowledge: {
-    bio: "I am a BCA graduate and MERN stack specialist with a deep interest in backend engineering and AI integration. My journey started with a focus on DSA and problem-solving, which evolved into building complex full-stack systems. I've participated in numerous hackathons, refining my ability to build production-grade solutions under pressure. Currently, I focus on deploying AI layers into real-world products to solve practical challenges.",
-    mission: "My mission is to deploy AI layers into real-world products to automate complex decision-making and improve human efficiency.",
-    strengths: "My core strength lies in 'Architectural Fluidity'—the ability to jump from high-fidelity UI design to deep backend logic without losing sight of the product's goal.",
-    deadlines: "I treat deadlines as fixed system constraints. I prioritize 'Signal over Noise,' ensuring the most critical features are production-hardened first.",
-    collaboration: "I communicate in 'Engineering Outcomes.' Instead of just saying what I built, I explain why it matters for the user and how it affects system performance.",
-    ai_vision: "I believe AI should be a 'Silent Partner' in products—not just a chatbot, but a layer that makes the software smarter and more predictive.",
+    bio: "I am a Full Stack Developer with a strong focus on building reliable backend systems and integrating smart AI features. My background in computer applications and algorithmic problem-solving helps me build applications that are not only functional but also highly efficient. I enjoy turning complex requirements into simple, elegant digital products.",
+    mission: "My mission is to build applications that use AI and smart logic to solve real-world problems and improve human efficiency.",
+    strengths: "I excel at bridging the gap between design and engineering, ensuring that a product looks great and works perfectly under the hood.",
+    deadlines: "I am committed to high-quality delivery within set timelines, focusing on the most critical features first.",
+    collaboration: "I focus on clear communication and outcome-driven development, ensuring that every feature adds real value to the user.",
+    ai_vision: "I believe AI should be a helpful partner in applications, making them smarter, more predictive, and easier to use.",
   },
 } as const;
 

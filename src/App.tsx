@@ -41,7 +41,8 @@ import {
   Zap,
   Activity,
   Award,
-  BookOpen
+  BookOpen,
+  Menu
 } from 'lucide-react';
 import { useEffect, useRef, type ReactNode, useState } from 'react';
 import resumeFile from './assets/Ankittiwari_Resume.pdf';
@@ -114,15 +115,15 @@ const capabilityBands: Array<{
   skills: SkillRecord[];
 }> = [
   {
-    title: 'Core Systems',
+    title: 'Core Languages',
     skills: portfolioData.skills.filter((skill) => skill.category === 'Programming' || skill.category === 'Platform'),
   },
   {
-    title: 'Product Surface',
+    title: 'Frontend & UI',
     skills: portfolioData.skills.filter((skill) => skill.category === 'Interface'),
   },
   {
-    title: 'Intelligence Layer',
+    title: 'AI & Intelligence',
     skills: portfolioData.skills.filter((skill) => skill.category === 'AI Systems'),
   },
   {
@@ -142,13 +143,13 @@ const scrollToId = (id: string) => {
 };
 
 const explainProject = (project: ProjectRecord): ProjectExplainState => ({
-  title: `Technical Deep-Dive: ${project.title}`,
+  title: `Project Overview: ${project.title}`,
   summary: project.summary,
   details: [
-    { label: 'Architectural Pattern', value: project.deep_specs?.architecture || 'Micro-services inspired flow' },
-    { label: 'Technical Rationale', value: project.deep_specs?.tech_rationale || 'Built for high performance and scalability.' },
-    { label: 'Key Implementation Challenge', value: project.deep_specs?.challenges_solved?.[0] || 'Optimizing complex data flows.' },
-    { label: 'Intelligence Layer', value: project.deep_specs?.ai_integration || 'Standard algorithmic logic.' },
+    { label: 'Project Structure', value: project.deep_specs?.architecture || 'Modular design' },
+    { label: 'Tech Rationale', value: project.deep_specs?.tech_rationale || 'Built for high performance and scalability.' },
+    { label: 'Challenges Solved', value: project.deep_specs?.challenges_solved?.[0] || 'Optimizing complex data flows.' },
+    { label: 'AI Integration', value: project.deep_specs?.ai_integration || 'Standard logic.' },
   ],
 });
 
@@ -211,17 +212,63 @@ function App() {
   );
   const [isHovering, setIsHovering] = useState(false);
   const [githubRepos, setGithubRepos] = useState<any[]>([]);
+  const [githubUser, setGithubUser] = useState<any>(null);
+  const [formStatus, setFormStatus] = useState<'idle' | 'sending' | 'success'>('idle');
+  const [notification, setNotification] = useState<{ message: string; type: 'success' | 'info' } | null>(null);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const showNotification = (message: string, type: 'success' | 'info' = 'success') => {
+    setNotification({ message, type });
+    setTimeout(() => setNotification(null), 3000);
+  };
 
   const handleSuggestionClick = (suggestion: (typeof askSuggestions)[number]) => {
     setAskPanelContent(getAskPanelContent(suggestion));
   };
 
   useEffect(() => {
+    // Fetch User Profile
+    fetch('https://api.github.com/users/ankit-tiwari-dev')
+      .then(res => res.json())
+      .then(data => setGithubUser(data))
+      .catch(() => {});
+
+    // Fetch Repos
     fetch('https://api.github.com/users/ankit-tiwari-dev/repos?sort=updated&per_page=5')
       .then(res => res.json())
       .then(data => Array.isArray(data) && setGithubRepos(data.slice(0, 5)))
       .catch(() => {});
   }, []);
+
+  const handleContactSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setFormStatus('sending');
+    
+    const form = e.target as HTMLFormElement;
+    const formData = new FormData(form);
+    
+    try {
+      const response = await fetch('https://formspree.io/f/mpzvzqzk', { // Using a generic endpoint or user can replace with their own ID
+        method: 'POST',
+        body: formData,
+        headers: {
+          'Accept': 'application/json'
+        }
+      });
+      
+      if (response.ok) {
+        setFormStatus('success');
+        form.reset();
+        setTimeout(() => setFormStatus('idle'), 5000);
+      } else {
+        setFormStatus('idle');
+        alert('Transmission error. Please try again or use direct email.');
+      }
+    } catch (error) {
+      setFormStatus('idle');
+      alert('System offline. Please check your connectivity.');
+    }
+  };
 
   const achievementsRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress: achievementsProgress } = useScroll({
@@ -264,36 +311,62 @@ function App() {
       <main className="relative z-10">
         <section
           id="hero"
-          className="mx-auto max-w-7xl px-4 pt-[28px] sm:px-5 sm:pt-[34px] md:px-8 md:pt-[42px] lg:px-10 lg:pt-[49px]"
+          className="mx-auto max-w-7xl px-4 pt-[100px] sm:px-5 sm:pt-[120px] md:px-8 md:pt-[140px] lg:px-10 lg:pt-[160px]"
         >
           <div className="w-full">
             <div className="hero-editorial-shell">
               {/* Header Navigation */}
-              <nav className="flex items-center justify-between mb-12 lg:mb-20">
-                <div>
-                  <p className="font-heading text-xs sm:text-sm font-medium uppercase tracking-[0.2em] text-amber-200/80">
-                    {portfolioData.identity.name}
-                  </p>
-                </div>
+              <nav className="fixed top-0 left-0 right-0 z-[100] px-4 py-3 sm:px-10 sm:py-6 backdrop-blur-xl border-b border-white/5 bg-[#020408]/80">
+                <div className="mx-auto max-w-7xl flex items-center justify-between">
+                  <div className="group cursor-pointer" onClick={() => scrollToId('hero')}>
+                    <p className="font-heading text-[10px] sm:text-xs font-bold uppercase tracking-[0.3em] text-white group-hover:text-amber-500 transition-all truncate max-w-[120px] sm:max-w-none">
+                      {portfolioData.identity.name}
+                    </p>
+                  </div>
 
-                <div className="flex items-center gap-3 sm:gap-5">
-                  <button className="text-[11px] sm:text-xs text-slate-500 uppercase tracking-wider hover:text-amber-200 transition-colors" onClick={() => scrollToId('projects')} type="button">
-                    Work
-                  </button>
-                  <button className="text-[11px] sm:text-xs text-slate-500 uppercase tracking-wider hover:text-amber-200 transition-colors" onClick={() => scrollToId('skills')} type="button">
-                    Skills
-                  </button>
-                  <button className="text-[11px] sm:text-xs text-slate-500 uppercase tracking-wider hover:text-amber-200 transition-colors" onClick={() => scrollToId('bio')} type="button">
-                    About
-                  </button>
-                  <div className="h-3 w-px bg-white/10 mx-2" />
-                  <div className="flex items-center gap-3">
-                    <a href={portfolioData.contact.find(c => c.label === 'GitHub')?.href} target="_blank" className="text-slate-500 hover:text-white transition-colors">
-                      <Github size={14} />
-                    </a>
-                    <a href={portfolioData.contact.find(c => c.label === 'LinkedIn')?.href} target="_blank" className="text-slate-500 hover:text-white transition-colors">
-                      <Linkedin size={14} />
-                    </a>
+                  <div className="flex items-center gap-2 sm:gap-6">
+                    <div className="hidden md:flex items-center gap-6 pr-6 border-r border-white/10">
+                      {[
+                        { label: 'Work', id: 'projects' },
+                        { label: 'Skills', id: 'skills' },
+                        { label: 'Journey', id: 'achievements' },
+                        { label: 'Activity', id: 'github' }
+                      ].map(link => (
+                        <button 
+                          key={link.id}
+                          className="text-[10px] uppercase tracking-widest text-slate-500 hover:text-white transition-all" 
+                          onClick={() => scrollToId(link.id)} 
+                          type="button"
+                        >
+                          {link.label}
+                        </button>
+                      ))}
+                    </div>
+                    
+                    <div className="flex items-center gap-3 sm:gap-4 pl-2 sm:pl-0">
+                      <button 
+                        onClick={() => scrollToId('contact')}
+                        className="hidden sm:block px-6 py-2.5 bg-amber-500 text-black rounded-lg text-[10px] uppercase tracking-[0.2em] hover:bg-amber-400 transition-all font-bold shadow-[0_10px_20px_rgba(245,158,11,0.2)]"
+                      >
+                        Contact
+                      </button>
+
+                      {/* Mobile Toggle */}
+                      <button 
+                        onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                        className="md:hidden p-2 text-white hover:bg-white/5 rounded-lg transition-colors"
+                      >
+                        {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+                      </button>
+                      <div className="hidden sm:flex items-center gap-3">
+                        <a href={portfolioData.contact.find(c => c.label === 'GitHub')?.href} target="_blank" className="text-slate-500 hover:text-white transition-colors">
+                          <Github size={14} />
+                        </a>
+                        <a href={portfolioData.contact.find(c => c.label === 'LinkedIn')?.href} target="_blank" className="text-slate-500 hover:text-white transition-colors">
+                          <Linkedin size={14} />
+                        </a>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </nav>
@@ -411,8 +484,8 @@ function App() {
             >
               <div className="absolute -top-10 -left-10 w-40 h-40 bg-amber-500/5 blur-[80px]" />
               <SectionIntro
-                eyebrow="Engineering Profile"
-                title="Full Stack Engineer + AI Enthusiast"
+                eyebrow="My Profile"
+                title="Engineering & Philosophy"
                 body={portfolioData.careerKnowledge.bio}
               />
               <div className="mt-10 grid grid-cols-2 gap-6">
@@ -433,71 +506,16 @@ function App() {
               viewport={{ once: true }}
               className="relative"
             >
-              {/* Terminal Mockup for Engineering Artifact */}
-              <div className="relative rounded-2xl border border-white/10 bg-[#05070a] shadow-2xl overflow-hidden group">
-                <div className="flex items-center justify-between px-4 py-3 bg-white/5 border-b border-white/5">
-                  <div className="flex gap-2">
-                    <div className="w-2.5 h-2.5 rounded-full bg-red-500/20 group-hover:bg-red-500/50 transition-colors" />
-                    <div className="w-2.5 h-2.5 rounded-full bg-amber-500/20 group-hover:bg-amber-500/50 transition-colors" />
-                    <div className="w-2.5 h-2.5 rounded-full bg-emerald-500/20 group-hover:bg-emerald-500/50 transition-colors" />
-                  </div>
-                  <div className="text-[9px] font-mono text-slate-500 tracking-widest uppercase">profile.sh — 80x24</div>
-                  <div className="w-8" />
-                </div>
-                <div className="p-6 font-mono text-xs sm:text-sm">
-                  <div className="flex gap-3 mb-2">
-                    <span className="text-emerald-500">➜</span>
-                    <span className="text-blue-400">~/ankit</span>
-                    <span className="text-slate-500">cat skills.json</span>
-                  </div>
-                  <div className="pl-6 text-slate-300 space-y-1">
-                    <p>{"{"}</p>
-                    <p className="pl-4">"role": <span className="text-amber-300">"Full Stack Engineer"</span>,</p>
-                    <p className="pl-4">"focus": <span className="text-amber-300">"AI + Scalable Systems"</span>,</p>
-                    <p className="pl-4">"status": <span className="text-emerald-400">"building_production_apps"</span>,</p>
-                    <p className="pl-4">"location": <span className="text-slate-400">"India"</span></p>
-                    <p>{"}"}</p>
-                  </div>
-                  <div className="flex gap-3 mt-6">
-                    <span className="text-emerald-500">➜</span>
-                    <span className="text-blue-400">~/ankit</span>
-                    <span className="animate-pulse inline-block w-2 h-4 bg-amber-500/80 align-middle" />
-                  </div>
-                </div>
-                
-                {/* Decorative circuit lines overlay */}
-                <div className="absolute inset-0 pointer-events-none opacity-10">
-                  <div className="absolute top-1/4 left-0 w-full h-px bg-gradient-to-r from-transparent via-amber-500 to-transparent" />
-                  <div className="absolute bottom-1/3 left-0 w-full h-px bg-gradient-to-r from-transparent via-blue-500 to-transparent" />
-                </div>
-              </div>
-
-              {/* Float-over strategic focus card */}
-              <motion.div
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3 }}
-                className="absolute -bottom-10 -right-4 sm:-right-10 w-64 rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-xl p-6 shadow-2xl hidden md:block"
-              >
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="p-2 rounded-lg bg-amber-500/10 text-amber-500">
-                    <Sparkles size={14} />
-                  </div>
-                  <span className="text-[10px] uppercase tracking-widest font-bold text-white">Strategic Intent</span>
-                </div>
-                <p className="text-[11px] text-slate-400 leading-relaxed italic">
-                  "I don't just write code; I design systems that solve human problems through intelligent automation."
-                </p>
-              </motion.div>
+              <InteractiveTerminal />
             </motion.div>
           </div>
         </section>
 
-        <section id="expertise" className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-24 md:px-10 bg-white/[0.01] rounded-[40px] border border-white/5">
+        <section id="expertise" className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-24 md:px-10 bg-white/[0.01] rounded-2xl border border-white/5">
           <SectionIntro
-            eyebrow="Technical Expertise"
-            title="Production engineering highlights."
-            body="I specialize in building hardened systems that solve specific architectural and security challenges."
+            eyebrow="My Expertise"
+            title="Technical Specializations"
+            body="I focus on building reliable systems that solve real-world problems through clean code and smart logic."
           />
           
           <div className="mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -540,9 +558,9 @@ function App() {
         <section id="projects" className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-24 md:px-10">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16">
             <SectionIntro
-              eyebrow="System Showcase"
-              title="Project Infrastructure"
-              body="High-precision builds focusing on AI integration, financial logic, and architectural reliability."
+              eyebrow="My Work"
+              title="Featured Projects"
+              body="A collection of full-stack applications focusing on AI integration, finance, and system reliability."
             />
           </div>
           
@@ -582,8 +600,8 @@ function App() {
         <section id="achievements" ref={achievementsRef} className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-32 md:px-10 overflow-hidden">
           <SectionIntro
             eyebrow="Chronicle"
-            title="Professional Journey & Milestones"
-            body="A timeline of growth, from BCA foundations to architecting production-grade AI systems."
+            title="Education & Journey"
+            body="A timeline of my growth as a developer, from university foundations to building AI applications."
           />
 
           <div className="relative mt-24">
@@ -596,7 +614,7 @@ function App() {
 
             <div className="space-y-16 sm:space-y-32">
               {portfolioData.journey.map((item, index) => (
-                <div key={item.year} className={`relative flex flex-col md:flex-row items-center gap-8 ${index % 2 === 0 ? 'md:flex-row-reverse' : ''}`}>
+                <div key={item.title} className={`relative flex flex-col md:flex-row items-center gap-8 ${index % 2 === 0 ? 'md:flex-row-reverse' : ''}`}>
                   <div className="hidden md:block w-1/2" />
                   <div className="absolute left-[16px] sm:left-[20px] md:left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-black border-2 border-amber-500 z-10">
                     <motion.div 
@@ -636,27 +654,27 @@ function App() {
           </div>
         </section>
 
-        <section id="github" className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-24 md:px-10">
-          <div className="rounded-[40px] bg-gradient-to-br from-amber-500/10 to-transparent border border-white/5 p-8 sm:p-16">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+        <section id="github" className="mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-20 md:px-10">
+          <div className="rounded-3xl bg-gradient-to-br from-amber-500/10 to-transparent border border-white/5 p-6 sm:p-12">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               <div>
                 <SectionIntro
                   eyebrow="Open Source"
-                  title="GitHub Engineering Pulse"
-                  body="Continuous contribution to the developer ecosystem. My workflow is transparent and documented through commit history."
+                  title="GitHub Activity"
+                  body="I actively contribute to the developer community and maintain transparency through my public code history."
                 />
                 <div className="mt-10 flex flex-wrap gap-8">
                   <div className="flex flex-col">
-                    <span className="text-2xl font-bold text-white">500+</span>
-                    <span className="text-[10px] uppercase tracking-widest text-slate-500 mt-1">Contributions</span>
+                    <span className="text-2xl font-bold text-white">{githubUser ? githubUser.followers : '...'}</span>
+                    <span className="text-[10px] uppercase tracking-widest text-slate-500 mt-1">Network Base</span>
                   </div>
                   <div className="flex flex-col">
-                    <span className="text-2xl font-bold text-white">40+</span>
-                    <span className="text-[10px] uppercase tracking-widest text-slate-500 mt-1">Repositories</span>
+                    <span className="text-2xl font-bold text-white">{githubUser ? githubUser.public_repos : '...'}</span>
+                    <span className="text-[10px] uppercase tracking-widest text-slate-500 mt-1">Public Repositories</span>
                   </div>
                   <div className="flex flex-col">
-                    <span className="text-2xl font-bold text-white">Top 5%</span>
-                    <span className="text-[10px] uppercase tracking-widest text-slate-500 mt-1">Active User</span>
+                    <span className="text-2xl font-bold text-white">{githubUser ? 'Active' : '...'}</span>
+                    <span className="text-[10px] uppercase tracking-widest text-slate-500 mt-1">Activity Status</span>
                   </div>
                 </div>
                 <a 
@@ -671,7 +689,7 @@ function App() {
               
               <div className="relative">
                 {/* Visual Mock of GitHub Contribution Graph */}
-                <div className="p-8 rounded-3xl bg-[#05070a] border border-white/10 shadow-[0_32px_64px_rgba(0,0,0,0.5)] backdrop-blur-xl relative overflow-hidden group">
+                <div className="p-8 rounded-2xl bg-[#05070a] border border-white/10 shadow-[0_32px_64px_rgba(0,0,0,0.5)] backdrop-blur-xl relative overflow-hidden group">
                   <div className="absolute inset-0 bg-gradient-to-br from-amber-500/5 via-transparent to-blue-500/5 pointer-events-none" />
                   
                   <div className="flex items-center justify-between mb-8 relative z-10">
@@ -709,9 +727,9 @@ function App() {
 
                   <div className="mt-10 grid grid-cols-3 gap-4 relative z-10">
                     {[
-                      { label: 'Longest Streak', val: '45 Days' },
-                      { label: 'PRs Merged', val: '120+' },
-                      { label: 'Commit Frequency', val: 'High' }
+                      { label: 'Followers', val: githubUser ? githubUser.followers : '...' },
+                      { label: 'Following', val: githubUser ? githubUser.following : '...' },
+                      { label: 'Public Gists', val: githubUser ? githubUser.public_gists : '...' }
                     ].map((stat, i) => (
                       <div key={i} className="p-3 rounded-xl border border-white/5 bg-white/[0.02]">
                         <p className="text-[8px] uppercase tracking-widest text-slate-500 mb-1">{stat.label}</p>
@@ -727,8 +745,10 @@ function App() {
                         <div className="absolute inset-0 rounded-full bg-emerald-500 animate-ping opacity-50" />
                       </div>
                       <div className="flex flex-col">
-                        <span className="text-[9px] text-white font-bold uppercase tracking-widest">System Status: Active</span>
-                        <span className="text-[8px] text-slate-600 font-mono italic">Processing v2.0 updates...</span>
+                        <span className="text-[9px] text-white font-bold uppercase tracking-widest">
+                          {githubUser ? `Last Activity: ${new Date(githubUser.updated_at).toLocaleDateString()}` : 'System Status: Active'}
+                        </span>
+                        <span className="text-[8px] text-slate-600 font-mono italic">Synchronized with GitHub Profile...</span>
                       </div>
                     </div>
                     <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/5">
@@ -809,9 +829,9 @@ function App() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-24 items-start">
             <div>
               <SectionIntro
-                eyebrow="Connectivity"
-                title="Initiate professional sync."
-                body="Direct endpoints for technical deep-dives, professional networking, and collaborative inquiries. My inbox is open for high-impact engineering roles."
+                eyebrow="Contact"
+                title="Get In Touch"
+                body="I'm always open to discussing new projects, high-impact engineering roles, or technical collaborations."
               />
               
               <div className="mt-12 space-y-8">
@@ -845,51 +865,274 @@ function App() {
             </div>
 
             <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              className="p-8 sm:p-12 rounded-[32px] border border-white/10 bg-white/[0.02] backdrop-blur-xl"
+              className="relative p-8 sm:p-12 rounded-2xl border border-white/10 bg-[#030303] shadow-2xl overflow-hidden group"
             >
-              <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
-                <div className="space-y-2">
-                  <label className="text-[10px] uppercase tracking-[0.3em] text-slate-500 font-bold ml-1">Identity</label>
-                  <input type="text" placeholder="Your Full Name" className="w-full bg-white/5 border border-white/10 rounded-xl px-6 py-4 text-sm text-white focus:outline-none focus:border-amber-500/50 transition-all placeholder:text-slate-700" />
+              {/* Terminal Background Pattern */}
+              <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:20px_20px]" />
+              
+              <div className="relative z-10 space-y-10">
+                {/* Hub Header */}
+                <div className="flex items-center justify-between">
+                  <div className="space-y-1">
+                    <h3 className="text-xl font-bold text-white tracking-tight uppercase">Let's Connect</h3>
+                    <div className="flex items-center gap-2">
+                      <div className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                      <span className="text-[9px] text-slate-500 font-mono uppercase tracking-widest">Available for Work</span>
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <p className="text-[10px] text-slate-600 font-mono uppercase tracking-tighter">Local Time (IST)</p>
+                    <p className="text-sm text-white font-mono">{new Date().toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit', hour12: false })}</p>
+                  </div>
                 </div>
-                <div className="space-y-2">
-                  <label className="text-[10px] uppercase tracking-[0.3em] text-slate-500 font-bold ml-1">Endpoint</label>
-                  <input type="email" placeholder="email@address.com" className="w-full bg-white/5 border border-white/10 rounded-xl px-6 py-4 text-sm text-white focus:outline-none focus:border-amber-500/50 transition-all placeholder:text-slate-700" />
+
+                {/* Primary Action Terminal */}
+                <div className="p-6 rounded-xl border border-white/5 bg-white/[0.02] backdrop-blur-sm relative overflow-hidden">
+                  <div className="absolute top-0 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-amber-500/50 to-transparent" />
+                  <div className="flex items-center justify-between mb-6">
+                    <span className="text-[9px] uppercase tracking-widest text-slate-500 font-bold">Email Address</span>
+                    <Lock size={12} className="text-slate-700" />
+                  </div>
+                  <p className="text-lg font-mono text-white mb-8 tracking-tight break-all">ankit827691@gmail.com</p>
+                  <div className="flex flex-col sm:flex-row gap-3">
+                    <a 
+                      href="mailto:ankit827691@gmail.com"
+                      className="flex-1 py-4 bg-amber-500 text-black font-bold text-[9px] uppercase tracking-[0.3em] rounded-lg hover:bg-amber-400 transition-all flex items-center justify-center gap-2 group/btn"
+                    >
+                      <Send size={14} className="group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" /> 
+                      Send Email
+                    </a>
+                    <button 
+                      onClick={() => {
+                        navigator.clipboard.writeText('ankit827691@gmail.com');
+                        showNotification('Email Copied to Clipboard');
+                      }}
+                      className="flex-1 py-4 bg-white/5 border border-white/10 text-white font-bold text-[9px] uppercase tracking-[0.3em] rounded-lg hover:bg-white/10 transition-all flex items-center justify-center gap-2"
+                    >
+                      <Zap size={14} /> Copy Email
+                    </button>
+                  </div>
                 </div>
-                <div className="space-y-2">
-                  <label className="text-[10px] uppercase tracking-[0.3em] text-slate-500 font-bold ml-1">Payload</label>
-                  <textarea rows={4} placeholder="Your message here..." className="w-full bg-white/5 border border-white/10 rounded-xl px-6 py-4 text-sm text-white focus:outline-none focus:border-amber-500/50 transition-all placeholder:text-slate-700 resize-none" />
+
+                {/* Social & Competitive Grid */}
+                <div className="grid grid-cols-2 gap-4">
+                  {portfolioData.contact.filter(c => c.label !== 'Email').map((item) => (
+                    <a 
+                      key={item.label} 
+                      href={item.href} 
+                      target="_blank" 
+                      rel="noreferrer"
+                      className="p-5 rounded-xl border border-white/5 bg-white/[0.01] hover:bg-white/5 hover:border-amber-500/20 transition-all group relative overflow-hidden"
+                    >
+                      <div className="absolute top-0 right-0 p-2 opacity-10 group-hover:opacity-100 transition-opacity">
+                        <ArrowRight size={12} className="text-amber-500 -rotate-45" />
+                      </div>
+                      <span className="text-[8px] uppercase tracking-[0.3em] text-slate-600 font-bold block mb-2 group-hover:text-amber-500 transition-colors">
+                        {item.label}
+                      </span>
+                      <span className="text-[10px] text-white font-mono truncate block">
+                        {item.value}
+                      </span>
+                    </a>
+                  ))}
                 </div>
-                <button type="submit" className="w-full py-5 bg-amber-500 text-black font-bold text-[11px] uppercase tracking-[0.4em] rounded-xl hover:bg-amber-400 transition-all shadow-[0_20px_40px_rgba(245,158,11,0.2)] flex items-center justify-center gap-3">
-                  <Send size={14} /> Send Message
-                </button>
-              </form>
+
+                {/* System Log */}
+                <div className="p-4 rounded-lg bg-black/40 border border-white/5 font-mono text-[9px] space-y-1.5">
+                  <div className="flex justify-between text-slate-600">
+                    <span>&gt; STATUS:</span>
+                    <span className="text-emerald-500/80 uppercase">Active</span>
+                  </div>
+                  <div className="flex justify-between text-slate-600">
+                    <span>&gt; SECURITY:</span>
+                    <span className="text-amber-500/80 uppercase">TLS Enabled</span>
+                  </div>
+                  <div className="flex justify-between text-slate-600">
+                    <span>&gt; RESPONSE_TIME:</span>
+                    <span className="text-white/60 uppercase">Fast</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Edge Glow */}
+              <div className="absolute -bottom-24 -right-24 w-64 h-64 bg-amber-500/5 blur-[100px] pointer-events-none" />
             </motion.div>
           </div>
         </section>
 
         <footer className="mx-auto max-w-7xl px-4 py-16 sm:px-6 md:px-10 border-t border-white/5">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-12">
-            <div className="flex flex-col items-center md:items-start">
-              <p className="font-heading text-lg font-bold text-white mb-2 tracking-tight">ANKIT TIWARI</p>
-              <p className="text-[10px] uppercase tracking-[0.4em] text-slate-600 font-mono italic">Built with React + TypeScript + Framer Motion</p>
-            </div>
-            
-            <div className="flex items-center gap-8">
-              {['GitHub', 'LinkedIn', 'LeetCode'].map(label => (
-                <a key={label} href="#" className="text-[10px] uppercase tracking-[0.3em] text-slate-500 hover:text-amber-400 transition-colors">{label}</a>
-              ))}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16 lg:gap-8">
+            {/* Brand Block */}
+            <div className="space-y-6">
+              <div>
+                <p className="font-heading text-xl font-bold text-white tracking-tighter uppercase mb-2">Ankit Tiwari</p>
+                <div className="h-0.5 w-12 bg-amber-500 rounded-full" />
+              </div>
+              <p className="text-xs leading-7 text-slate-500 max-w-xs font-mono uppercase tracking-wider italic">
+                Full Stack Engineer focused on architectural reliability and AI-integrated products.
+              </p>
+              <div className="flex items-center gap-4 pt-4">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/5 text-slate-400 group hover:bg-amber-500 hover:text-black transition-all">
+                  <Monitor size={18} />
+                </div>
+                <div className="flex flex-col">
+                  <span className="text-[9px] uppercase tracking-widest text-slate-600 font-bold">Current Location</span>
+                  <span className="text-[10px] text-white font-mono">India</span>
+                </div>
+              </div>
             </div>
 
-            <div className="text-[10px] uppercase tracking-[0.3em] text-slate-700 font-mono">
-              © {new Date().getFullYear()} INDIA_NODE_01
+            {/* Navigation Block */}
+            <div className="space-y-8">
+              <h5 className="text-[10px] uppercase tracking-[0.4em] text-white font-bold">Navigation</h5>
+              <ul className="space-y-4">
+                {[
+                  { label: 'About Me', id: 'bio' },
+                  { label: 'My Projects', id: 'projects' },
+                  { label: 'My Skills', id: 'skills' },
+                  { label: 'Contact', id: 'contact' }
+                ].map(link => (
+                  <li key={link.id}>
+                    <button 
+                      onClick={() => scrollToId(link.id)}
+                      className="text-[10px] uppercase tracking-[0.2em] text-slate-500 hover:text-amber-400 transition-colors"
+                    >
+                      {link.label}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Connection Block */}
+            <div className="space-y-8">
+              <h5 className="text-[10px] uppercase tracking-[0.4em] text-white font-bold">Social Links</h5>
+              <ul className="space-y-4">
+                {portfolioData.contact.map(link => (
+                  <li key={link.label}>
+                    <a 
+                      href={link.href} 
+                      target="_blank" 
+                      rel="noreferrer"
+                      className="flex items-center gap-3 text-[10px] uppercase tracking-[0.2em] text-slate-500 hover:text-white transition-colors group"
+                    >
+                      <span className="w-1.5 h-1.5 rounded-full bg-white/10 group-hover:bg-amber-500 transition-colors" />
+                      {link.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Status Block */}
+            <div className="space-y-8">
+              <h5 className="text-[10px] uppercase tracking-[0.4em] text-white font-bold">Availability</h5>
+              <div className="p-6 rounded-2xl border border-white/5 bg-white/[0.01] space-y-4">
+                <div className="flex items-center gap-3">
+                  <div className="relative">
+                    <div className="w-2 h-2 rounded-full bg-emerald-500" />
+                    <div className="absolute inset-0 rounded-full bg-emerald-500 animate-ping opacity-50" />
+                  </div>
+                  <span className="text-[10px] uppercase tracking-widest text-white font-bold">Open for Roles</span>
+                </div>
+                <p className="text-[10px] leading-6 text-slate-500 font-mono italic">
+                  Actively interviewing for senior product engineering and AI-focused positions.
+                </p>
+                <button 
+                  onClick={() => scrollToId('contact')}
+                  className="w-full py-3 bg-white/5 border border-white/10 rounded-lg text-[9px] uppercase tracking-[0.3em] text-white hover:bg-white/10 transition-all font-bold"
+                >
+                  Contact Me
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-24 pt-12 border-t border-white/5 flex flex-col items-center justify-center gap-6 text-center">
+            <div className="flex items-center gap-3 text-[10px] uppercase tracking-[0.4em] text-white font-mono font-bold">
+              <span className="text-slate-600 tracking-normal">---</span>
+              Handcrafted with Laptop & Coffee 💻 ☕
+              <span className="text-slate-600 tracking-normal">---</span>
+            </div>
+            
+            <div className="flex flex-col items-center gap-2">
+              <span className="text-[9px] uppercase tracking-[0.3em] text-slate-700 font-mono italic">
+                © {new Date().getFullYear()} — ANKIT TIWARI — ALL SYSTEM RIGHTS RESERVED
+              </span>
             </div>
           </div>
         </footer>
       </main>
+
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className="fixed inset-0 z-[90] md:hidden pt-24 px-6 bg-[#020408]/95 backdrop-blur-2xl"
+          >
+            <nav className="flex flex-col gap-8">
+              {[
+                { label: 'Work', id: 'projects' },
+                { label: 'Skills', id: 'skills' },
+                { label: 'Journey', id: 'achievements' },
+                { label: 'Activity', id: 'github' },
+                { label: 'Contact', id: 'contact' }
+              ].map((link, idx) => (
+                <motion.button
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: idx * 0.1 }}
+                  key={link.id}
+                  onClick={() => {
+                    scrollToId(link.id);
+                    setMobileMenuOpen(false);
+                  }}
+                  className="text-2xl font-heading font-bold text-white uppercase tracking-[0.2em] flex items-center justify-between group"
+                >
+                  {link.label}
+                  <ArrowRight size={20} className="text-amber-500 opacity-0 group-hover:opacity-100 transition-all" />
+                </motion.button>
+              ))}
+            </nav>
+            
+            <div className="mt-20 pt-10 border-t border-white/5 space-y-6">
+              <p className="text-[10px] uppercase tracking-[0.4em] text-slate-600 font-bold">Connections</p>
+              <div className="flex gap-6">
+                <a href={portfolioData.contact.find(c => c.label === 'GitHub')?.href} className="text-white/60 hover:text-white transition-colors">
+                  <Github size={24} />
+                </a>
+                <a href={portfolioData.contact.find(c => c.label === 'LinkedIn')?.href} className="text-white/60 hover:text-white transition-colors">
+                  <Linkedin size={24} />
+                </a>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <AnimatePresence>
+        {notification && (
+          <motion.div
+            initial={{ opacity: 0, y: 50, x: '-50%' }}
+            animate={{ opacity: 1, y: 0, x: '-50%' }}
+            exit={{ opacity: 0, y: 20, x: '-50%' }}
+            className="fixed bottom-12 left-1/2 z-[100] px-6 py-3 rounded-xl bg-[#0a0a0a] border border-emerald-500/30 shadow-[0_20px_50px_rgba(0,0,0,0.5)] flex items-center gap-4 backdrop-blur-xl"
+          >
+            <div className="relative flex items-center justify-center">
+              <div className="w-2 h-2 rounded-full bg-emerald-500" />
+              <div className="absolute inset-0 rounded-full bg-emerald-500 animate-ping opacity-40" />
+            </div>
+            <span className="text-[10px] uppercase tracking-[0.2em] text-white font-bold font-mono">
+              {notification.message}
+            </span>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       <AnimatePresence>
         {selectedProject && (
@@ -905,7 +1148,7 @@ function App() {
         onClick={() => setAskPanelOpen(true)}
         type="button"
       >
-        <Sparkles size={16} className="text-amber-200" />
+        <Bot size={16} className="text-amber-200" />
         Ask about me
       </button>
 
@@ -1108,10 +1351,10 @@ function WelcomeScreen({ onEnter }: { onEnter: () => void }) {
   const [lineIndex, setLineIndex] = useState(0);
 
   const terminalLines = [
-    '> Initializing system environment...',
-    '> Loading project manifests...  ✓',
-    '> Compiling skill nodes...  ✓',
-    '> Establishing identity layer...  ✓',
+    '> Initializing environment...',
+    '> Loading project data...  ✓',
+    '> Compiling skills...  ✓',
+    '> Establishing profile...  ✓',
     '> System ready.',
   ];
 
@@ -1589,7 +1832,6 @@ function ProjectShowcaseCard({ project, index, onClick }: { project: ProjectReco
               ))}
             </div>
           </div>
-          <span className="text-[8px] font-mono text-slate-600 tracking-tighter uppercase">{project.year}</span>
         </div>
         
         <h3 className="text-xl font-bold text-white mb-2 tracking-tight group-hover:text-amber-400 transition-colors">{project.title}</h3>
@@ -1611,7 +1853,7 @@ function ProjectShowcaseCard({ project, index, onClick }: { project: ProjectReco
               <Zap size={8} /> Full Stack
             </span>
           )}
-          {(project.id === 'safespend' || project.id === 'medaimart') && (
+          {(project.id === 'safespend' || project.id === 'medicine-resale') && (
             <span className="flex items-center gap-1 px-2 py-0.5 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-[7px] uppercase tracking-widest font-bold rounded">
               <Lock size={8} /> Secure
             </span>
@@ -1808,7 +2050,7 @@ function SkillCard({ band, index }: { band: any; index: number }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ delay: index * 0.1 }}
-      className={`relative p-8 rounded-[32px] border border-white/5 bg-white/[0.01] hover:bg-white/[0.03] transition-all duration-500 group ${cardClasses[index]}`}
+      className={`relative p-8 rounded-2xl border border-white/5 bg-white/[0.01] hover:bg-white/[0.03] transition-all duration-500 group ${cardClasses[index]}`}
     >
       <div className="flex flex-col h-full relative z-10">
         <div className="flex items-center justify-between">
@@ -1818,7 +2060,7 @@ function SkillCard({ band, index }: { band: any; index: number }) {
             </div>
             <div>
               <h3 className="font-heading text-lg font-bold text-white tracking-tight">{band.title}</h3>
-              <p className="text-[9px] uppercase tracking-[0.3em] text-slate-600 font-mono italic">Module_0{index + 1}</p>
+              <p className="text-[9px] uppercase tracking-[0.3em] text-slate-600 font-mono italic">Specialization 0{index + 1}</p>
             </div>
           </div>
         </div>
@@ -1833,13 +2075,13 @@ function SkillCard({ band, index }: { band: any; index: number }) {
 
         <div className="mt-auto pt-10 flex items-center justify-between">
           <div className="flex flex-col">
-            <span className="text-[8px] uppercase tracking-widest text-slate-600 font-bold">Verification Status</span>
-            <span className="text-[10px] text-emerald-500/80 font-mono">Live_Pulse_Active</span>
+            <span className="text-[8px] uppercase tracking-widest text-slate-600 font-bold">Proficiency</span>
+            <span className="text-[10px] text-emerald-500/80 font-mono">Expert Level</span>
           </div>
           <div className="h-10 w-px bg-white/5" />
           <div className="flex flex-col items-end">
-            <span className="text-[8px] uppercase tracking-widest text-slate-600 font-bold">Network Density</span>
-            <span className="text-[10px] text-white font-mono">{band.skills.length} Nodes</span>
+            <span className="text-[8px] uppercase tracking-widest text-slate-600 font-bold">Total Skills</span>
+            <span className="text-[10px] text-white font-mono">{band.skills.length} Applied</span>
           </div>
         </div>
       </div>
@@ -1891,7 +2133,6 @@ function AchievementNode({ item, index }: { item: any; index: number }) {
           <div className={`mt-4 p-3 rounded-md border border-white/5 bg-white/[0.02] text-xs leading-relaxed text-slate-400 group-hover:bg-white/[0.04] transition-all sm:mt-6 sm:p-4 sm:rounded-lg sm:text-sm ${isEven ? 'md:ml-auto' : 'md:mr-auto'}`}>
             {item.description}
             <div className="mt-3 pt-3 border-t border-white/5 flex items-center gap-2 text-[9px] uppercase tracking-widest text-slate-600 sm:mt-4 sm:pt-4 sm:gap-3 sm:text-[10px]">
-              <Sparkles size={12} className="text-amber-500/40" />
               <span>Outcome: {item.outcome}</span>
             </div>
           </div>
@@ -1900,6 +2141,171 @@ function AchievementNode({ item, index }: { item: any; index: number }) {
 
       {/* Invisible spacer for the other side of the zig-zag */}
       <div className="hidden md:block md:w-[45%]" />
+    </div>
+  );
+}
+
+function InteractiveTerminal() {
+  const [history, setHistory] = useState<Array<{ type: 'cmd' | 'out'; content: any }>>([
+    { type: 'out', content: 'System v2.0 initialized. Type "help" to see available commands.' }
+  ]);
+  const [input, setInput] = useState('');
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  const scrollToCommand = () => {
+    if (scrollContainerRef.current) {
+      const container = scrollContainerRef.current;
+      // Scroll to the bottom to see the latest output
+      container.scrollTo({
+        top: container.scrollHeight,
+        behavior: 'smooth'
+      });
+    }
+  };
+
+  const handleContainerClick = () => {
+    inputRef.current?.focus();
+  };
+
+  useEffect(() => {
+    // Small delay to ensure DOM is updated
+    const timer = setTimeout(scrollToCommand, 100);
+    return () => clearTimeout(timer);
+  }, [history]);
+
+  const commands: Record<string, () => void> = {
+    help: () => {
+      setHistory(prev => [...prev, { 
+        type: 'out', 
+        content: 'Available commands:\n- about: Display engineering bio\n- projects: List featured builds\n- skills: Show technical stack\n- contact: Connectivity channels\n- ls: List virtual files\n- cat [file]: Read virtual file\n- clear: Purge terminal history' 
+      }]);
+    },
+    about: () => {
+      setHistory(prev => [...prev, { type: 'out', content: portfolioData.careerKnowledge.bio }]);
+    },
+    projects: () => {
+      const projects = portfolioData.projects.map(p => `${p.title} - ${p.strapline}`).join('\n');
+      setHistory(prev => [...prev, { type: 'out', content: `Featured Projects:\n${projects}` }]);
+    },
+    skills: () => {
+      const skills = portfolioData.skills.slice(0, 10).map(s => s.name).join(', ');
+      setHistory(prev => [...prev, { type: 'out', content: `Core Tech Stack: ${skills}... and more.` }]);
+    },
+    expertise: () => {
+      setHistory(prev => [...prev, { type: 'out', content: 'Navigating to Technical Proficiency benchmarks...' }]);
+    },
+    contact: () => {
+      const contacts = portfolioData.contact.map(c => `${c.label}: ${c.value}`).join('\n');
+      setHistory(prev => [...prev, { type: 'out', content: `Connection Endpoints:\n${contacts}` }]);
+    },
+    ls: () => {
+      setHistory(prev => [...prev, { type: 'out', content: 'skills.json  projects.manifest  identity.env' }]);
+    },
+    cat: () => {
+      setHistory(prev => [...prev, { type: 'out', content: 'Usage: cat [filename]. Try "cat skills.json"' }]);
+    },
+    'cat skills.json': () => {
+      setHistory(prev => [...prev, { type: 'out', content: JSON.stringify({
+        role: "Full Stack Engineer",
+        focus: "AI + Scalable Systems",
+        status: "building_production_apps",
+        location: "India"
+      }, null, 2) }]);
+    },
+    'cat projects.manifest': () => {
+      setHistory(prev => [...prev, { type: 'out', content: JSON.stringify(
+        portfolioData.projects.map(p => ({
+          id: p.id,
+          name: p.title,
+          stack: p.stack.slice(0, 3)
+        })), null, 2) }]);
+    },
+    'cat identity.env': () => {
+      setHistory(prev => [...prev, { type: 'out', content: `NODE_ENV=production\nUSER=ankit\nSTATUS=open_to_work\nREGION=IN_GUJ_SRT\nUPLOADING_LOGS=active` }]);
+    },
+    clear: () => {
+      setHistory([{ type: 'out', content: 'Terminal cleared. System ready.' }]);
+    }
+  };
+
+  const handleCommand = (e: React.FormEvent) => {
+    e.preventDefault();
+    const cmd = input.trim().toLowerCase();
+    if (!cmd) return;
+
+    setHistory(prev => [...prev, { type: 'cmd', content: input }]);
+    
+    if (commands[cmd]) {
+      commands[cmd]();
+    } else if (cmd.startsWith('cat ')) {
+      const parts = input.trim().split(/\s+/);
+      const file = parts[1]?.toLowerCase();
+      if (file === 'skills.json') commands['cat skills.json']();
+      else if (file === 'projects.manifest') commands['cat projects.manifest']();
+      else if (file === 'identity.env') commands['cat identity.env']();
+      else setHistory(prev => [...prev, { type: 'out', content: `Error: File "${file}" not found.` }]);
+    } else {
+      setHistory(prev => [...prev, { type: 'out', content: `Command not found: ${cmd}. Type "help" for options.` }]);
+    }
+
+    setInput('');
+  };
+
+  return (
+    <div 
+      onClick={handleContainerClick}
+      className="relative rounded-2xl border border-white/10 bg-[#05070a] shadow-2xl overflow-hidden group min-h-[320px] flex flex-col cursor-text"
+    >
+      <div className="flex items-center justify-between px-4 py-3 bg-white/5 border-b border-white/5">
+        <div className="flex gap-2">
+          <div className="w-2.5 h-2.5 rounded-full bg-red-500/20 group-hover:bg-red-500/50 transition-colors" />
+          <div className="w-2.5 h-2.5 rounded-full bg-amber-500/20 group-hover:bg-amber-500/50 transition-colors" />
+          <div className="w-2.5 h-2.5 rounded-full bg-emerald-500/20 group-hover:bg-emerald-500/50 transition-colors" />
+        </div>
+        <div className="text-[9px] font-mono text-slate-500 tracking-widest uppercase">interactive-shell — 80x24</div>
+        <div className="w-8" />
+      </div>
+      
+      <div 
+        ref={scrollContainerRef}
+        className="p-6 font-mono text-xs sm:text-sm flex-1 overflow-y-auto scrollbar-hide max-h-[400px] scroll-smooth"
+      >
+        {history.map((entry, i) => (
+          <div key={i} className="mb-3 animate-in fade-in slide-in-from-left-2 duration-300">
+            {entry.type === 'cmd' ? (
+              <div className="flex gap-3">
+                <span className="text-emerald-500">➜</span>
+                <span className="text-blue-400">~/ankit</span>
+                <span className="text-white">{entry.content}</span>
+              </div>
+            ) : (
+              <pre className="text-slate-400 whitespace-pre-wrap leading-relaxed">
+                {entry.content}
+              </pre>
+            )}
+          </div>
+        ))}
+        
+        <form onSubmit={handleCommand} className="flex gap-3 mt-4">
+          <span className="text-emerald-500">➜</span>
+          <span className="text-blue-400">~/ankit</span>
+          <input
+            ref={inputRef}
+            type="text"
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            className="flex-1 bg-transparent border-none outline-none text-white p-0 m-0"
+            autoFocus
+            spellCheck={false}
+          />
+        </form>
+      </div>
+
+      <div className="absolute inset-0 pointer-events-none opacity-[0.03]">
+        <div className="absolute top-1/4 left-0 w-full h-px bg-gradient-to-r from-transparent via-amber-500 to-transparent" />
+        <div className="absolute bottom-1/3 left-0 w-full h-px bg-gradient-to-r from-transparent via-blue-500 to-transparent" />
+      </div>
     </div>
   );
 }
