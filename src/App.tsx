@@ -192,7 +192,7 @@ function App() {
   const achievementsRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress: achievementsProgress } = useScroll({
     target: achievementsRef,
-    offset: ["start end", "end end"]
+    offset: ["start center", "end center"]
   });
 
   const pathLength = useSpring(achievementsProgress, { stiffness: 400, damping: 90 });
@@ -516,14 +516,14 @@ function App() {
           </div>
         </section>
 
-        <section id="achievements" ref={achievementsRef} className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-32 md:px-10 overflow-hidden">
+        <section id="achievements" className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-32 md:px-10 overflow-hidden">
           <SectionIntro
             eyebrow="Chronicle"
             title="Education & Journey"
             body="A timeline of my growth as a developer, from university foundations to building AI applications."
           />
 
-          <div className="relative mt-24">
+          <div className="relative mt-24" ref={achievementsRef}>
             <div className="absolute left-[16px] top-0 bottom-0 w-px bg-white/5 sm:left-[20px] md:left-1/2 md:-translate-x-1/2">
               <motion.div 
                 style={{ scaleY: pathLength, originY: 0 }}
