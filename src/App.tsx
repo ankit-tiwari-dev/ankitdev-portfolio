@@ -288,10 +288,10 @@ function App() {
                   </button>
                   <div className="h-3 w-px bg-white/10 mx-2" />
                   <div className="flex items-center gap-3">
-                    <a href="https://github.com/ankit-tiwari-dev" target="_blank" className="text-slate-500 hover:text-white transition-colors">
+                    <a href={portfolioData.contact.find(c => c.label === 'GitHub')?.href} target="_blank" className="text-slate-500 hover:text-white transition-colors">
                       <Github size={14} />
                     </a>
-                    <a href="https://linkedin.com/in/ankit-tiwari-dev" target="_blank" className="text-slate-500 hover:text-white transition-colors">
+                    <a href={portfolioData.contact.find(c => c.label === 'LinkedIn')?.href} target="_blank" className="text-slate-500 hover:text-white transition-colors">
                       <Linkedin size={14} />
                     </a>
                   </div>
@@ -431,27 +431,64 @@ function App() {
               initial={{ opacity: 0, x: 20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              className="relative rounded-2xl border border-white/10 bg-white/[0.01] p-8 overflow-hidden group"
+              className="relative"
             >
-              <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-                <Code size={120} strokeWidth={1} />
+              {/* Terminal Mockup for Engineering Artifact */}
+              <div className="relative rounded-2xl border border-white/10 bg-[#05070a] shadow-2xl overflow-hidden group">
+                <div className="flex items-center justify-between px-4 py-3 bg-white/5 border-b border-white/5">
+                  <div className="flex gap-2">
+                    <div className="w-2.5 h-2.5 rounded-full bg-red-500/20 group-hover:bg-red-500/50 transition-colors" />
+                    <div className="w-2.5 h-2.5 rounded-full bg-amber-500/20 group-hover:bg-amber-500/50 transition-colors" />
+                    <div className="w-2.5 h-2.5 rounded-full bg-emerald-500/20 group-hover:bg-emerald-500/50 transition-colors" />
+                  </div>
+                  <div className="text-[9px] font-mono text-slate-500 tracking-widest uppercase">profile.sh — 80x24</div>
+                  <div className="w-8" />
+                </div>
+                <div className="p-6 font-mono text-xs sm:text-sm">
+                  <div className="flex gap-3 mb-2">
+                    <span className="text-emerald-500">➜</span>
+                    <span className="text-blue-400">~/ankit</span>
+                    <span className="text-slate-500">cat skills.json</span>
+                  </div>
+                  <div className="pl-6 text-slate-300 space-y-1">
+                    <p>{"{"}</p>
+                    <p className="pl-4">"role": <span className="text-amber-300">"Full Stack Engineer"</span>,</p>
+                    <p className="pl-4">"focus": <span className="text-amber-300">"AI + Scalable Systems"</span>,</p>
+                    <p className="pl-4">"status": <span className="text-emerald-400">"building_production_apps"</span>,</p>
+                    <p className="pl-4">"location": <span className="text-slate-400">"India"</span></p>
+                    <p>{"}"}</p>
+                  </div>
+                  <div className="flex gap-3 mt-6">
+                    <span className="text-emerald-500">➜</span>
+                    <span className="text-blue-400">~/ankit</span>
+                    <span className="animate-pulse inline-block w-2 h-4 bg-amber-500/80 align-middle" />
+                  </div>
+                </div>
+                
+                {/* Decorative circuit lines overlay */}
+                <div className="absolute inset-0 pointer-events-none opacity-10">
+                  <div className="absolute top-1/4 left-0 w-full h-px bg-gradient-to-r from-transparent via-amber-500 to-transparent" />
+                  <div className="absolute bottom-1/3 left-0 w-full h-px bg-gradient-to-r from-transparent via-blue-500 to-transparent" />
+                </div>
               </div>
-              <h4 className="font-heading text-lg font-medium text-white mb-6">Strategic Focus</h4>
-              <ul className="space-y-4">
-                {[
-                  { icon: Database, text: 'Backend scalability & schema design' },
-                  { icon: BrainCircuit, text: 'AI-native product development' },
-                  { icon: ShieldAlert, text: 'Secure auth & API hardening' },
-                  { icon: Zap, text: 'Performance-first frontend builds' }
-                ].map((item, i) => (
-                  <li key={i} className="flex items-start gap-4 text-sm text-slate-400 group/item">
-                    <div className="mt-1 p-1.5 rounded-lg bg-amber-500/10 text-amber-400 group-hover/item:scale-110 transition-transform">
-                      <item.icon size={14} />
-                    </div>
-                    <span className="leading-relaxed">{item.text}</span>
-                  </li>
-                ))}
-              </ul>
+
+              {/* Float-over strategic focus card */}
+              <motion.div
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3 }}
+                className="absolute -bottom-10 -right-4 sm:-right-10 w-64 rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-xl p-6 shadow-2xl hidden md:block"
+              >
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="p-2 rounded-lg bg-amber-500/10 text-amber-500">
+                    <Sparkles size={14} />
+                  </div>
+                  <span className="text-[10px] uppercase tracking-widest font-bold text-white">Strategic Intent</span>
+                </div>
+                <p className="text-[11px] text-slate-400 leading-relaxed italic">
+                  "I don't just write code; I design systems that solve human problems through intelligent automation."
+                </p>
+              </motion.div>
             </motion.div>
           </div>
         </section>
@@ -471,10 +508,11 @@ function App() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
-                className="group p-8 rounded-2xl border border-white/5 bg-black/20 hover:border-amber-500/30 transition-all duration-500"
+                className="group relative p-8 rounded-2xl border border-white/5 bg-white/[0.01] hover:bg-white/[0.03] hover:border-amber-500/20 transition-all duration-700 overflow-hidden"
               >
-                <div className="flex items-center justify-between mb-6">
-                  <div className="p-3 rounded-xl bg-amber-500/5 text-amber-500 group-hover:bg-amber-500 group-hover:text-black transition-all duration-500">
+                <div className="absolute inset-0 bg-gradient-to-br from-amber-500/[0.02] via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+                <div className="flex items-center justify-between mb-8 relative z-10">
+                  <div className="p-3 rounded-xl bg-amber-500/5 text-amber-500 group-hover:bg-amber-500 group-hover:text-black transition-all duration-500 shadow-[0_0_20px_rgba(245,158,11,0.05)]">
                     {i === 0 && <Layers size={20} />}
                     {i === 1 && <Lock size={20} />}
                     {i === 2 && <Database size={20} />}
@@ -483,16 +521,17 @@ function App() {
                     {i === 5 && <Monitor size={20} />}
                   </div>
                   <div className="flex gap-1">
-                    {[1,2,3].map(dot => <div key={dot} className="h-1 w-1 rounded-full bg-white/10" />)}
+                    {[1,2].map(dot => <div key={dot} className="h-1 w-1 rounded-full bg-white/10 group-hover:bg-amber-500/30 transition-colors" />)}
                   </div>
                 </div>
-                <h4 className="text-lg font-bold text-white mb-3 group-hover:text-amber-200 transition-colors">{exp.title}</h4>
-                <p className="text-xs leading-relaxed text-slate-500 mb-6">{exp.description}</p>
-                <div className="flex flex-wrap gap-2">
+                <h4 className="text-lg font-bold text-white mb-3 group-hover:text-amber-200 transition-colors relative z-10">{exp.title}</h4>
+                <p className="text-xs leading-relaxed text-slate-500 mb-8 group-hover:text-slate-400 transition-colors relative z-10">{exp.description}</p>
+                <div className="flex flex-wrap gap-2 relative z-10">
                   {exp.skills.map(s => (
-                    <span key={s} className="text-[8px] uppercase tracking-widest px-2 py-1 bg-white/5 rounded border border-white/5 text-slate-400 group-hover:text-white transition-colors">{s}</span>
+                    <span key={s} className="text-[8px] uppercase tracking-widest px-2 py-1 bg-white/5 rounded border border-white/5 text-slate-500 group-hover:text-amber-200/60 group-hover:border-amber-500/10 transition-all">{s}</span>
                   ))}
                 </div>
+                <div className="absolute -bottom-2 -right-2 w-24 h-24 bg-amber-500/5 blur-[40px] opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
               </motion.div>
             ))}
           </div>
@@ -632,35 +671,70 @@ function App() {
               
               <div className="relative">
                 {/* Visual Mock of GitHub Contribution Graph */}
-                <div className="p-6 rounded-2xl bg-black/40 border border-white/5 backdrop-blur-xl">
-                  <div className="flex items-center justify-between mb-6">
-                    <div className="flex items-center gap-2">
-                      <Activity size={14} className="text-amber-500" />
-                      <span className="text-[10px] uppercase tracking-widest text-slate-400 font-mono">Activity Heatmap</span>
+                <div className="p-8 rounded-3xl bg-[#05070a] border border-white/10 shadow-[0_32px_64px_rgba(0,0,0,0.5)] backdrop-blur-xl relative overflow-hidden group">
+                  <div className="absolute inset-0 bg-gradient-to-br from-amber-500/5 via-transparent to-blue-500/5 pointer-events-none" />
+                  
+                  <div className="flex items-center justify-between mb-8 relative z-10">
+                    <div className="flex items-center gap-3">
+                      <div className="p-2 rounded-lg bg-amber-500/10 text-amber-500">
+                        <Activity size={16} />
+                      </div>
+                      <div>
+                        <span className="text-[10px] uppercase tracking-widest text-white font-bold block">Activity Heatmap</span>
+                        <span className="text-[9px] text-slate-600 font-mono">ankit-tiwari-dev / engineering_pulse</span>
+                      </div>
                     </div>
-                    <span className="text-[9px] text-slate-600 font-mono">ankit-tiwari-dev / 2024-25</span>
+                    <div className="flex gap-1">
+                      {Array.from({ length: 4 }).map((_, i) => (
+                        <div key={i} className="w-1 h-1 rounded-full bg-white/10" />
+                      ))}
+                    </div>
                   </div>
-                  <div className="grid grid-cols-12 gap-1.5">
+
+                  <div className="grid grid-cols-12 gap-2 relative z-10">
                     {Array.from({ length: 60 }).map((_, i) => (
                       <motion.div 
                         key={i}
                         initial={{ opacity: 0, scale: 0 }}
                         whileInView={{ opacity: 1, scale: 1 }}
-                        transition={{ delay: i * 0.01 }}
-                        className={`aspect-square rounded-sm ${
-                          i % 7 === 0 ? 'bg-amber-500/80' : 
-                          i % 3 === 0 ? 'bg-amber-500/40' : 
-                          i % 5 === 0 ? 'bg-amber-500/10' : 'bg-white/5'
+                        transition={{ delay: i * 0.005, ease: "backOut" }}
+                        className={`aspect-square rounded-[2px] transition-colors duration-500 ${
+                          i % 7 === 0 ? 'bg-amber-500' : 
+                          i % 3 === 0 ? 'bg-amber-500/60' : 
+                          i % 5 === 0 ? 'bg-amber-500/20' : 'bg-white/5 group-hover:bg-white/10'
                         }`}
                       />
                     ))}
                   </div>
-                  <div className="mt-8 pt-8 border-t border-white/5 flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                      <span className="text-[9px] text-slate-500 uppercase tracking-widest font-bold">Currently Building: Next.js + AI Agent System</span>
+
+                  <div className="mt-10 grid grid-cols-3 gap-4 relative z-10">
+                    {[
+                      { label: 'Longest Streak', val: '45 Days' },
+                      { label: 'PRs Merged', val: '120+' },
+                      { label: 'Commit Frequency', val: 'High' }
+                    ].map((stat, i) => (
+                      <div key={i} className="p-3 rounded-xl border border-white/5 bg-white/[0.02]">
+                        <p className="text-[8px] uppercase tracking-widest text-slate-500 mb-1">{stat.label}</p>
+                        <p className="text-xs text-white font-bold font-mono">{stat.val}</p>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="mt-8 pt-6 border-t border-white/5 flex items-center justify-between relative z-10">
+                    <div className="flex items-center gap-3">
+                      <div className="relative">
+                        <div className="w-2.5 h-2.5 rounded-full bg-emerald-500" />
+                        <div className="absolute inset-0 rounded-full bg-emerald-500 animate-ping opacity-50" />
+                      </div>
+                      <div className="flex flex-col">
+                        <span className="text-[9px] text-white font-bold uppercase tracking-widest">System Status: Active</span>
+                        <span className="text-[8px] text-slate-600 font-mono italic">Processing v2.0 updates...</span>
+                      </div>
                     </div>
-                    <BookOpen size={14} className="text-slate-700" />
+                    <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/5">
+                      <BookOpen size={10} className="text-slate-500" />
+                      <span className="text-[8px] text-slate-400 uppercase tracking-widest font-bold">Documentation: 98%</span>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -1551,6 +1625,14 @@ function ProjectShowcaseCard({ project, index, onClick }: { project: ProjectReco
             <a href={project.links.github} target="_blank" onClick={(e) => e.stopPropagation()} className="text-[9px] uppercase tracking-widest font-bold text-slate-600 hover:text-white transition-colors flex items-center gap-1.5">
               <Github size={10} /> Repo
             </a>
+            {project.links.live && (
+              <>
+                <div className="h-1 w-1 rounded-full bg-white/10" />
+                <a href={project.links.live} target="_blank" onClick={(e) => e.stopPropagation()} className="text-[9px] uppercase tracking-widest font-bold text-slate-600 hover:text-white transition-colors flex items-center gap-1.5">
+                  <Globe size={10} /> Live
+                </a>
+              </>
+            )}
           </div>
           <ArrowRight size={14} className="text-slate-800 group-hover:text-amber-500 transition-all duration-500 group-hover:translate-x-1" />
         </div>
@@ -1726,36 +1808,44 @@ function SkillCard({ band, index }: { band: any; index: number }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ delay: index * 0.1 }}
-      className={`bento-skill-card group ${cardClasses[index]}`}
+      className={`relative p-8 rounded-[32px] border border-white/5 bg-white/[0.01] hover:bg-white/[0.03] transition-all duration-500 group ${cardClasses[index]}`}
     >
-      <div className="flex flex-col h-full">
+      <div className="flex flex-col h-full relative z-10">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/[0.03] text-amber-200 group-hover:scale-110 group-hover:text-amber-300 transition-all duration-500">
-              <Icon size={20} />
+            <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-white/10 bg-white/[0.03] text-amber-500 group-hover:bg-amber-500 group-hover:text-black transition-all duration-500 shadow-xl">
+              <Icon size={22} />
             </div>
             <div>
-              <h3 className="font-heading text-lg font-medium text-white">{band.title}</h3>
-              <p className="text-[10px] uppercase tracking-widest text-slate-500">Module {index + 1}</p>
+              <h3 className="font-heading text-lg font-bold text-white tracking-tight">{band.title}</h3>
+              <p className="text-[9px] uppercase tracking-[0.3em] text-slate-600 font-mono italic">Module_0{index + 1}</p>
             </div>
           </div>
-
         </div>
 
-        <div className="mt-8 flex flex-wrap gap-2">
+        <div className="mt-10 flex flex-wrap gap-2">
           {band.skills.map((skill: any) => (
-            <span key={skill.id} className="skill-chip">
+            <span key={skill.id} className="px-3 py-1.5 rounded-full bg-white/5 border border-white/5 text-[10px] text-slate-400 hover:text-amber-200 hover:border-amber-500/30 transition-all cursor-default">
               {skill.name}
             </span>
           ))}
         </div>
 
-        <div className="mt-auto pt-8 flex items-center justify-between text-[10px] uppercase tracking-[0.2em] text-slate-600">
-          <span>Validated Output</span>
-          <span className="h-px flex-1 mx-4 bg-white/5" />
-          <span>{band.skills.length} Nodes</span>
+        <div className="mt-auto pt-10 flex items-center justify-between">
+          <div className="flex flex-col">
+            <span className="text-[8px] uppercase tracking-widest text-slate-600 font-bold">Verification Status</span>
+            <span className="text-[10px] text-emerald-500/80 font-mono">Live_Pulse_Active</span>
+          </div>
+          <div className="h-10 w-px bg-white/5" />
+          <div className="flex flex-col items-end">
+            <span className="text-[8px] uppercase tracking-widest text-slate-600 font-bold">Network Density</span>
+            <span className="text-[10px] text-white font-mono">{band.skills.length} Nodes</span>
+          </div>
         </div>
       </div>
+      
+      {/* Subtle glow background */}
+      <div className="absolute top-0 right-0 w-32 h-32 bg-amber-500/5 blur-[60px] opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
     </motion.div>
   );
 }
