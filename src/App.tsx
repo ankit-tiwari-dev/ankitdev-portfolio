@@ -1,5 +1,48 @@
-import { AnimatePresence, motion, useMotionValue, useSpring, useScroll, useTransform } from 'framer-motion';
-import { ArrowLeft, ArrowRight, Bot, BrainCircuit, ChevronLeft, ChevronRight, Code, Download, ExternalLink, FileText, Filter, Github, Globe, Layers, Layout, Linkedin, Mail, Maximize2, Monitor, RefreshCw, Search, ShieldAlert, Smartphone, Sparkles, X } from 'lucide-react';
+import { 
+  AnimatePresence, 
+  motion, 
+  useMotionValue, 
+  useSpring, 
+  useScroll, 
+  useTransform 
+} from 'framer-motion';
+import { 
+  ArrowLeft, 
+  ArrowRight, 
+  Bot, 
+  BrainCircuit, 
+  ChevronLeft, 
+  ChevronRight, 
+  Code, 
+  Download, 
+  ExternalLink, 
+  FileText, 
+  Filter, 
+  Github, 
+  Globe, 
+  Layers, 
+  Layout, 
+  Linkedin, 
+  Mail, 
+  Maximize2, 
+  Monitor, 
+  RefreshCw, 
+  Search, 
+  ShieldAlert, 
+  Smartphone, 
+  Sparkles, 
+  X,
+  Map,
+  Calendar,
+  MessageSquare,
+  Send,
+  Database,
+  Lock,
+  Zap,
+  Activity,
+  Award,
+  BookOpen
+} from 'lucide-react';
 import { useEffect, useRef, type ReactNode, useState } from 'react';
 import resumeFile from './assets/Ankittiwari_Resume.pdf';
 import profileImage from './assets/Image.png';
@@ -240,12 +283,18 @@ function App() {
                   <button className="text-[11px] sm:text-xs text-slate-500 uppercase tracking-wider hover:text-amber-200 transition-colors" onClick={() => scrollToId('skills')} type="button">
                     Skills
                   </button>
-                  <button className="text-[11px] sm:text-xs text-slate-500 uppercase tracking-wider hover:text-amber-200 transition-colors" onClick={() => scrollToId('why-me')} type="button">
+                  <button className="text-[11px] sm:text-xs text-slate-500 uppercase tracking-wider hover:text-amber-200 transition-colors" onClick={() => scrollToId('bio')} type="button">
                     About
                   </button>
-                  <a className="text-[11px] sm:text-xs text-slate-500 uppercase tracking-wider hover:text-amber-200 transition-colors" href={resumeFile} target="_blank" rel="noreferrer">
-                    Resume
-                  </a>
+                  <div className="h-3 w-px bg-white/10 mx-2" />
+                  <div className="flex items-center gap-3">
+                    <a href="https://github.com/ankit-tiwari-dev" target="_blank" className="text-slate-500 hover:text-white transition-colors">
+                      <Github size={14} />
+                    </a>
+                    <a href="https://linkedin.com/in/ankit-tiwari-dev" target="_blank" className="text-slate-500 hover:text-white transition-colors">
+                      <Linkedin size={14} />
+                    </a>
+                  </div>
                 </div>
               </nav>
 
@@ -260,8 +309,12 @@ function App() {
                         transition={{ duration: 0.8, delay: 0.08 }}
                         className="hero-editorial-title text-center lg:text-left"
                       >
-                        <span className="block">{portfolioData.identity.name}</span>
-                        <span className="hero-editorial-subline">Software Engineer</span>
+                        <span className="block tracking-tight">{portfolioData.identity.name}</span>
+                        <span className="hero-editorial-subline flex flex-col lg:flex-row lg:items-center gap-2">
+                          <span className="text-white">Full Stack Developer</span>
+                          <span className="hidden lg:block h-1.5 w-1.5 rounded-full bg-amber-500" />
+                          <span className="text-amber-500/80">AI Enthusiast</span>
+                        </span>
                       </motion.h1>
                     </div>
 
@@ -301,10 +354,11 @@ function App() {
                     initial={{ opacity: 0, y: 24 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: 0.32 }}
-                    className="hero-editorial-actions justify-center lg:justify-start mt-8 lg:mt-auto"
+                    className="hero-editorial-actions flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 mt-8 lg:mt-auto"
                   >
-                    <ActionButton label="View Work" onClick={() => scrollToId('projects')} primary />
-                    <a className="hero-button" href={resumeFile} target="_blank" rel="noreferrer">
+                    <ActionButton label="Explore Work" onClick={() => scrollToId('projects')} primary />
+                    <ActionButton label="Contact Me" onClick={() => scrollToId('contact')} />
+                    <a className="hero-button border border-white/5 bg-white/5 hover:bg-white/10" href={resumeFile} target="_blank" rel="noreferrer">
                       Resume
                       <Download size={16} />
                     </a>
@@ -344,6 +398,103 @@ function App() {
                 </div>
               </div>
             </div>
+          </div>
+        </section>
+
+        <section id="bio" className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-24 md:px-10">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className="relative"
+            >
+              <div className="absolute -top-10 -left-10 w-40 h-40 bg-amber-500/5 blur-[80px]" />
+              <SectionIntro
+                eyebrow="Engineering Profile"
+                title="Full Stack Engineer + AI Enthusiast"
+                body={portfolioData.careerKnowledge.bio}
+              />
+              <div className="mt-10 grid grid-cols-2 gap-6">
+                <div className="p-4 rounded-xl border border-white/5 bg-white/[0.02]">
+                  <p className="text-[10px] uppercase tracking-widest text-slate-500 mb-2 font-mono italic">Background</p>
+                  <p className="text-sm text-slate-300 font-medium">BCA Graduate</p>
+                </div>
+                <div className="p-4 rounded-xl border border-white/5 bg-white/[0.02]">
+                  <p className="text-[10px] uppercase tracking-widest text-slate-500 mb-2 font-mono italic">Stack</p>
+                  <p className="text-sm text-slate-300 font-medium">MERN + AI Systems</p>
+                </div>
+              </div>
+            </motion.div>
+            
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className="relative rounded-2xl border border-white/10 bg-white/[0.01] p-8 overflow-hidden group"
+            >
+              <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                <Code size={120} strokeWidth={1} />
+              </div>
+              <h4 className="font-heading text-lg font-medium text-white mb-6">Strategic Focus</h4>
+              <ul className="space-y-4">
+                {[
+                  { icon: Database, text: 'Backend scalability & schema design' },
+                  { icon: BrainCircuit, text: 'AI-native product development' },
+                  { icon: ShieldAlert, text: 'Secure auth & API hardening' },
+                  { icon: Zap, text: 'Performance-first frontend builds' }
+                ].map((item, i) => (
+                  <li key={i} className="flex items-start gap-4 text-sm text-slate-400 group/item">
+                    <div className="mt-1 p-1.5 rounded-lg bg-amber-500/10 text-amber-400 group-hover/item:scale-110 transition-transform">
+                      <item.icon size={14} />
+                    </div>
+                    <span className="leading-relaxed">{item.text}</span>
+                  </li>
+                ))}
+              </ul>
+            </motion.div>
+          </div>
+        </section>
+
+        <section id="expertise" className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-24 md:px-10 bg-white/[0.01] rounded-[40px] border border-white/5">
+          <SectionIntro
+            eyebrow="Technical Expertise"
+            title="Production engineering highlights."
+            body="I specialize in building hardened systems that solve specific architectural and security challenges."
+          />
+          
+          <div className="mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {portfolioData.expertise.map((exp, i) => (
+              <motion.div
+                key={exp.title}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+                className="group p-8 rounded-2xl border border-white/5 bg-black/20 hover:border-amber-500/30 transition-all duration-500"
+              >
+                <div className="flex items-center justify-between mb-6">
+                  <div className="p-3 rounded-xl bg-amber-500/5 text-amber-500 group-hover:bg-amber-500 group-hover:text-black transition-all duration-500">
+                    {i === 0 && <Layers size={20} />}
+                    {i === 1 && <Lock size={20} />}
+                    {i === 2 && <Database size={20} />}
+                    {i === 3 && <BrainCircuit size={20} />}
+                    {i === 4 && <Zap size={20} />}
+                    {i === 5 && <Monitor size={20} />}
+                  </div>
+                  <div className="flex gap-1">
+                    {[1,2,3].map(dot => <div key={dot} className="h-1 w-1 rounded-full bg-white/10" />)}
+                  </div>
+                </div>
+                <h4 className="text-lg font-bold text-white mb-3 group-hover:text-amber-200 transition-colors">{exp.title}</h4>
+                <p className="text-xs leading-relaxed text-slate-500 mb-6">{exp.description}</p>
+                <div className="flex flex-wrap gap-2">
+                  {exp.skills.map(s => (
+                    <span key={s} className="text-[8px] uppercase tracking-widest px-2 py-1 bg-white/5 rounded border border-white/5 text-slate-400 group-hover:text-white transition-colors">{s}</span>
+                  ))}
+                </div>
+              </motion.div>
+            ))}
           </div>
         </section>
 
@@ -392,12 +543,11 @@ function App() {
         <section id="achievements" ref={achievementsRef} className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-32 md:px-10 overflow-hidden">
           <SectionIntro
             eyebrow="Chronicle"
-            title="Proof of delivery, recorded as nodes."
-            body="Your career path isn't a straight line—it's a series of high-impact nodes. Scroll to trace the circuit of your professional achievements."
+            title="Professional Journey & Milestones"
+            body="A timeline of growth, from BCA foundations to architecting production-grade AI systems."
           />
 
           <div className="relative mt-24">
-            {/* The Animated Circuit Trace */}
             <div className="absolute left-[16px] top-0 bottom-0 w-px bg-white/5 sm:left-[20px] md:left-1/2 md:-translate-x-1/2">
               <motion.div 
                 style={{ scaleY: pathLength, originY: 0 }}
@@ -406,6 +556,36 @@ function App() {
             </div>
 
             <div className="space-y-16 sm:space-y-32">
+              {portfolioData.journey.map((item, index) => (
+                <div key={item.year} className={`relative flex flex-col md:flex-row items-center gap-8 ${index % 2 === 0 ? 'md:flex-row-reverse' : ''}`}>
+                  <div className="hidden md:block w-1/2" />
+                  <div className="absolute left-[16px] sm:left-[20px] md:left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-black border-2 border-amber-500 z-10">
+                    <motion.div 
+                      initial={{ scale: 0 }}
+                      whileInView={{ scale: 1 }}
+                      className="absolute inset-0 rounded-full bg-amber-500 animate-pulse" 
+                    />
+                  </div>
+                  <motion.div 
+                    initial={{ opacity: 0, x: index % 2 === 0 ? -40 : 40 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    className="w-full md:w-1/2 pl-12 md:pl-0"
+                  >
+                    <div className={`p-8 rounded-2xl border border-white/5 bg-white/[0.02] hover:bg-white/[0.04] transition-all duration-500 ${index % 2 === 0 ? 'md:text-right' : 'md:text-left'}`}>
+                      <span className="text-3xl font-bold text-amber-500/20 font-mono mb-2 block">{item.year}</span>
+                      <h4 className="text-xl font-bold text-white mb-3">{item.title}</h4>
+                      <p className="text-sm leading-relaxed text-slate-400">{item.description}</p>
+                    </div>
+                  </motion.div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="mt-32">
+            <h4 className="text-center text-[10px] uppercase tracking-[0.4em] text-slate-600 mb-16">Key Records & Awards</h4>
+            <div className="space-y-16">
               {portfolioData.achievements.map((item, index) => (
                 <AchievementNode 
                   key={item.id} 
@@ -413,6 +593,77 @@ function App() {
                   index={index} 
                 />
               ))}
+            </div>
+          </div>
+        </section>
+
+        <section id="github" className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-24 md:px-10">
+          <div className="rounded-[40px] bg-gradient-to-br from-amber-500/10 to-transparent border border-white/5 p-8 sm:p-16">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+              <div>
+                <SectionIntro
+                  eyebrow="Open Source"
+                  title="GitHub Engineering Pulse"
+                  body="Continuous contribution to the developer ecosystem. My workflow is transparent and documented through commit history."
+                />
+                <div className="mt-10 flex flex-wrap gap-8">
+                  <div className="flex flex-col">
+                    <span className="text-2xl font-bold text-white">500+</span>
+                    <span className="text-[10px] uppercase tracking-widest text-slate-500 mt-1">Contributions</span>
+                  </div>
+                  <div className="flex flex-col">
+                    <span className="text-2xl font-bold text-white">40+</span>
+                    <span className="text-[10px] uppercase tracking-widest text-slate-500 mt-1">Repositories</span>
+                  </div>
+                  <div className="flex flex-col">
+                    <span className="text-2xl font-bold text-white">Top 5%</span>
+                    <span className="text-[10px] uppercase tracking-widest text-slate-500 mt-1">Active User</span>
+                  </div>
+                </div>
+                <a 
+                  href="https://github.com/ankit-tiwari-dev" 
+                  target="_blank" 
+                  rel="noreferrer"
+                  className="mt-10 inline-flex items-center gap-3 px-8 py-4 bg-white text-black font-bold text-[10px] uppercase tracking-widest rounded-xl hover:bg-amber-400 transition-all"
+                >
+                  <Github size={16} /> Explore Repositories
+                </a>
+              </div>
+              
+              <div className="relative">
+                {/* Visual Mock of GitHub Contribution Graph */}
+                <div className="p-6 rounded-2xl bg-black/40 border border-white/5 backdrop-blur-xl">
+                  <div className="flex items-center justify-between mb-6">
+                    <div className="flex items-center gap-2">
+                      <Activity size={14} className="text-amber-500" />
+                      <span className="text-[10px] uppercase tracking-widest text-slate-400 font-mono">Activity Heatmap</span>
+                    </div>
+                    <span className="text-[9px] text-slate-600 font-mono">ankit-tiwari-dev / 2024-25</span>
+                  </div>
+                  <div className="grid grid-cols-12 gap-1.5">
+                    {Array.from({ length: 60 }).map((_, i) => (
+                      <motion.div 
+                        key={i}
+                        initial={{ opacity: 0, scale: 0 }}
+                        whileInView={{ opacity: 1, scale: 1 }}
+                        transition={{ delay: i * 0.01 }}
+                        className={`aspect-square rounded-sm ${
+                          i % 7 === 0 ? 'bg-amber-500/80' : 
+                          i % 3 === 0 ? 'bg-amber-500/40' : 
+                          i % 5 === 0 ? 'bg-amber-500/10' : 'bg-white/5'
+                        }`}
+                      />
+                    ))}
+                  </div>
+                  <div className="mt-8 pt-8 border-t border-white/5 flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                      <span className="text-[9px] text-slate-500 uppercase tracking-widest font-bold">Currently Building: Next.js + AI Agent System</span>
+                    </div>
+                    <BookOpen size={14} className="text-slate-700" />
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </section>
@@ -480,66 +731,90 @@ function App() {
           </div>
         </section>
 
-        <section id="contact" className="mx-auto max-w-7xl px-4 pb-24 pt-16 sm:px-6 sm:pb-48 sm:pt-32 md:px-10">
-          <SectionIntro
-            eyebrow="Connectivity"
-            title="Initiate professional sync."
-            body="Direct endpoints for technical deep-dives, professional networking, and collaborative inquiries."
-          />
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mt-16">
-            {/* CV Download Card */}
-            <a 
-              href={resumeFile} 
-              target="_blank" 
-              rel="noreferrer"
-              className="group relative overflow-hidden rounded-xl border border-white/10 bg-white/[0.02] p-6 sm:p-8 transition-all hover:border-amber-400/30 hover:bg-white/[0.04]"
-            >
-              <div className="flex items-center justify-between mb-6 sm:mb-8">
-                <div className="flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-xl sm:rounded-2xl bg-amber-500/10 text-amber-500 group-hover:scale-110 transition-transform duration-500">
-                  <Download size={20} />
-                </div>
-                <ArrowRight size={18} className="-rotate-45 text-slate-700 group-hover:text-amber-400 transition-colors" />
-              </div>
-              <h3 className="font-heading text-lg sm:text-xl font-medium text-white">Resume</h3>
-              <p className="mt-2 text-[10px] sm:text-xs text-slate-500 uppercase tracking-widest">Download Full CV</p>
-            </a>
-
-            {portfolioData.contact.map((item) => {
-              const configMap: Record<string, { icon: any; color: string; bg: string; border: string }> = {
-                'Resume': { icon: FileText, color: 'text-amber-500', bg: 'bg-amber-500/10', border: 'hover:border-amber-500/30' },
-                'GitHub': { icon: Github, color: 'text-white', bg: 'bg-white/5', border: 'hover:border-white/30' },
-                'LinkedIn': { icon: Linkedin, color: 'text-[#0077b5]', bg: 'bg-[#0077b5]/10', border: 'hover:border-[#0077b5]/30' },
-                'LeetCode': { icon: LeetCodeLogo, color: 'text-[#ffa116]', bg: 'bg-[#ffa116]/10', border: 'hover:border-[#ffa116]/30' },
-                'GeeksforGeeks': { icon: GFGLogo, color: 'text-[#2ec866]', bg: 'bg-[#2ec866]/10', border: 'hover:border-[#2ec866]/30' },
-                'Email': { icon: Mail, color: 'text-amber-400', bg: 'bg-amber-400/10', border: 'hover:border-amber-400/30' }
-              };
+        <section id="contact" className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-32 md:px-10">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-24 items-start">
+            <div>
+              <SectionIntro
+                eyebrow="Connectivity"
+                title="Initiate professional sync."
+                body="Direct endpoints for technical deep-dives, professional networking, and collaborative inquiries. My inbox is open for high-impact engineering roles."
+              />
               
-              const config = configMap[item.label] || { icon: Sparkles, color: 'text-slate-400', bg: 'bg-white/5', border: 'hover:border-white/20' };
-              
-              const Icon = config.icon;
-              
-              return (
-                <a
-                  key={item.label}
-                  href={item.href}
-                  target="_blank"
-                  rel="noreferrer"
-                  className={`group relative overflow-hidden rounded-xl border border-white/5 bg-white/[0.01] p-6 sm:p-8 transition-all ${config.border} hover:bg-white/[0.03]`}
-                >
-                  <div className="flex items-center justify-between mb-6 sm:mb-8">
-                    <div className={`flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-xl sm:rounded-2xl ${config.bg} ${config.color} group-hover:scale-110 transition-transform duration-500`}>
-                      <Icon size={20} />
-                    </div>
-                    <ArrowRight size={18} className="-rotate-45 text-slate-800 group-hover:text-slate-400 transition-colors" />
+              <div className="mt-12 space-y-8">
+                <div className="flex items-center gap-6 group">
+                  <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-white/5 text-slate-400 group-hover:bg-amber-500 group-hover:text-black transition-all duration-500">
+                    <Map size={24} />
                   </div>
-                  <h3 className="font-heading text-lg sm:text-xl font-medium text-white group-hover:text-white transition-colors">{item.label}</h3>
-                  <p className="mt-2 text-[10px] sm:text-xs text-slate-600 truncate">{item.value}</p>
-                </a>
-              );
-            })}
+                  <div>
+                    <p className="text-[10px] uppercase tracking-widest text-slate-600 font-bold mb-1">Location</p>
+                    <p className="text-white font-medium">Surat, Gujarat, India</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-6 group">
+                  <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-white/5 text-slate-400 group-hover:bg-amber-500 group-hover:text-black transition-all duration-500">
+                    <Calendar size={24} />
+                  </div>
+                  <div>
+                    <p className="text-[10px] uppercase tracking-widest text-slate-600 font-bold mb-1">Availability</p>
+                    <p className="text-white font-medium">Immediate Start for Engineering Roles</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-4 mt-16">
+                {portfolioData.contact.slice(0, 4).map((item) => (
+                  <a key={item.label} href={item.href} target="_blank" rel="noreferrer" className="flex items-center gap-3 p-4 rounded-xl border border-white/5 bg-white/[0.01] hover:bg-white/5 transition-colors text-slate-400 hover:text-amber-400">
+                    <span className="text-[10px] uppercase tracking-widest font-bold">{item.label}</span>
+                  </a>
+                ))}
+              </div>
+            </div>
+
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              className="p-8 sm:p-12 rounded-[32px] border border-white/10 bg-white/[0.02] backdrop-blur-xl"
+            >
+              <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
+                <div className="space-y-2">
+                  <label className="text-[10px] uppercase tracking-[0.3em] text-slate-500 font-bold ml-1">Identity</label>
+                  <input type="text" placeholder="Your Full Name" className="w-full bg-white/5 border border-white/10 rounded-xl px-6 py-4 text-sm text-white focus:outline-none focus:border-amber-500/50 transition-all placeholder:text-slate-700" />
+                </div>
+                <div className="space-y-2">
+                  <label className="text-[10px] uppercase tracking-[0.3em] text-slate-500 font-bold ml-1">Endpoint</label>
+                  <input type="email" placeholder="email@address.com" className="w-full bg-white/5 border border-white/10 rounded-xl px-6 py-4 text-sm text-white focus:outline-none focus:border-amber-500/50 transition-all placeholder:text-slate-700" />
+                </div>
+                <div className="space-y-2">
+                  <label className="text-[10px] uppercase tracking-[0.3em] text-slate-500 font-bold ml-1">Payload</label>
+                  <textarea rows={4} placeholder="Your message here..." className="w-full bg-white/5 border border-white/10 rounded-xl px-6 py-4 text-sm text-white focus:outline-none focus:border-amber-500/50 transition-all placeholder:text-slate-700 resize-none" />
+                </div>
+                <button type="submit" className="w-full py-5 bg-amber-500 text-black font-bold text-[11px] uppercase tracking-[0.4em] rounded-xl hover:bg-amber-400 transition-all shadow-[0_20px_40px_rgba(245,158,11,0.2)] flex items-center justify-center gap-3">
+                  <Send size={14} /> Send Message
+                </button>
+              </form>
+            </motion.div>
           </div>
         </section>
+
+        <footer className="mx-auto max-w-7xl px-4 py-16 sm:px-6 md:px-10 border-t border-white/5">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-12">
+            <div className="flex flex-col items-center md:items-start">
+              <p className="font-heading text-lg font-bold text-white mb-2 tracking-tight">ANKIT TIWARI</p>
+              <p className="text-[10px] uppercase tracking-[0.4em] text-slate-600 font-mono italic">Built with React + TypeScript + Framer Motion</p>
+            </div>
+            
+            <div className="flex items-center gap-8">
+              {['GitHub', 'LinkedIn', 'LeetCode'].map(label => (
+                <a key={label} href="#" className="text-[10px] uppercase tracking-[0.3em] text-slate-500 hover:text-amber-400 transition-colors">{label}</a>
+              ))}
+            </div>
+
+            <div className="text-[10px] uppercase tracking-[0.3em] text-slate-700 font-mono">
+              © {new Date().getFullYear()} INDIA_NODE_01
+            </div>
+          </div>
+        </footer>
       </main>
 
       <AnimatePresence>
@@ -1246,20 +1521,38 @@ function ProjectShowcaseCard({ project, index, onClick }: { project: ProjectReco
         <h3 className="text-xl font-bold text-white mb-2 tracking-tight group-hover:text-amber-400 transition-colors">{project.title}</h3>
         <p className="text-xs text-slate-500 line-clamp-2 leading-relaxed mb-6">{project.summary}</p>
         
-        <div className="flex flex-wrap gap-2 mb-6">
+        <div className="flex flex-wrap gap-1.5 mb-6">
           {project.stack.slice(0, 3).map(s => (
-            <span key={s} className="text-[8px] text-slate-400 border border-white/5 bg-white/[0.03] px-2 py-1 rounded lowercase font-mono">
+            <span key={s} className="text-[8px] text-slate-400 border border-white/5 bg-white/[0.03] px-2 py-0.5 rounded lowercase font-mono">
               {s}
             </span>
           ))}
+          {project.category.includes('AI/ML') && (
+            <span className="flex items-center gap-1 px-2 py-0.5 bg-purple-500/10 border border-purple-500/20 text-purple-400 text-[7px] uppercase tracking-widest font-bold rounded">
+              <BrainCircuit size={8} /> AI Powered
+            </span>
+          )}
+          {project.category.includes('Full Stack') && (
+            <span className="flex items-center gap-1 px-2 py-0.5 bg-blue-500/10 border border-blue-500/20 text-blue-400 text-[7px] uppercase tracking-widest font-bold rounded">
+              <Zap size={8} /> Full Stack
+            </span>
+          )}
+          {(project.id === 'safespend' || project.id === 'medaimart') && (
+            <span className="flex items-center gap-1 px-2 py-0.5 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-[7px] uppercase tracking-widest font-bold rounded">
+              <Lock size={8} /> Secure
+            </span>
+          )}
         </div>
-
+        
         <div className="flex items-center justify-between pt-4 border-t border-white/5">
-          <div className="flex gap-4">
-            {project.links.github && <Github size={14} className="text-slate-600 hover:text-white transition-colors" />}
-            {project.links.live && <ExternalLink size={14} className="text-slate-600 hover:text-white transition-colors" />}
+          <div className="flex items-center gap-3">
+            <button className="text-[9px] uppercase tracking-widest font-bold text-amber-500 hover:text-amber-400 transition-colors">Case Study</button>
+            <div className="h-1 w-1 rounded-full bg-white/10" />
+            <a href={project.links.github} target="_blank" onClick={(e) => e.stopPropagation()} className="text-[9px] uppercase tracking-widest font-bold text-slate-600 hover:text-white transition-colors flex items-center gap-1.5">
+              <Github size={10} /> Repo
+            </a>
           </div>
-          <span className="text-[9px] uppercase tracking-widest text-amber-500 font-bold">View Case Study</span>
+          <ArrowRight size={14} className="text-slate-800 group-hover:text-amber-500 transition-all duration-500 group-hover:translate-x-1" />
         </div>
       </div>
     </motion.div>

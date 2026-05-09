@@ -73,12 +73,12 @@ export type ContactRecord = {
 export const portfolioData = {
   identity: {
     name: 'Ankit Tiwari',
-    role: 'Software Engineer',
+    role: 'Full Stack Developer + AI Enthusiast',
     focus: 'AI Systems + Full-Stack Product Engineering',
     location: 'India',
     availability: 'Open to software engineering and AI product roles',
     summary:
-      'Builds production-ready software systems where AI, backend reliability, and interface clarity work as one product surface.',
+      'A BCA graduate specializing in MERN stack and AI-powered systems. I build production-ready software where backend reliability, intelligent layers, and clean architecture converge.',
   },
   stats: [
     { label: 'REST APIs Built', value: '60+' },
@@ -597,54 +597,61 @@ export const portfolioData = {
       url: 'https://www.geeksforgeeks.org/certificate/25b05a101ce37ce5729b8730c37fabd2',
       details: 'Comprehensive mastery of complex algorithms and data structure optimization.',
     },
-  ],
-  achievements: [
-    {
-      id: 'design-thinking',
-      title: '1st Place - Design Thinking Competition',
-      organization: 'Bhagwan Mahavir University',
-      date: 'November 2024',
-      type: 'award',
-      description: 'Built a technology-led solution focused on campus sustainability.',
-      outcome: 'Demonstrated product framing and applied problem solving under evaluation.',
-    },
-    {
-      id: 'innovate-hackathon',
-      title: '2nd Place - Innovate Hackathon',
-      organization: 'Bhagwan Mahavir College of Computer Application',
-      date: 'March 2025',
-      type: 'award',
-      description: 'Developed an app concept connecting students to volunteer opportunities.',
-      outcome: 'Showed speed, collaboration, and delivery under time pressure.',
-    },
-    {
-      id: 'mindstorm',
-      title: '3rd Place - Mindstorm Competition',
-      organization: 'D.C. Patel College and J.N.M. Patel Science College',
-      date: 'January 2025',
-      type: 'award',
-      description: 'Solved algorithmic and data structure challenges in a timed environment.',
-      outcome: 'Validated strong problem-solving fundamentals.',
-    },
-    {
-      id: 'deans-list',
-      title: "Dean's List Scholar",
-      organization: 'BCA Department',
-      date: '2024 - 2025',
-      type: 'milestone',
-      description: 'Maintained strong academic performance across the academic year.',
-      outcome: 'Signals consistency and discipline alongside project work.',
-    },
-    {
-      id: 'open-source',
-      title: 'Open Source Contributor',
-      organization: 'GitHub',
-      date: 'October 2022',
-      type: 'milestone',
-      description: 'Contributed fixes, enhancements, and documentation improvements to repositories.',
-      outcome: 'Shows initiative and collaboration beyond coursework.',
-    },
   ] satisfies AchievementRecord[],
+  expertise: [
+    {
+      title: 'Backend Architecture',
+      description: 'Designing scalable microservices and monolithic systems with robust error handling and logging.',
+      skills: ['Node.js', 'Express', 'BullMQ', 'Redis']
+    },
+    {
+      title: 'Auth & Security',
+      description: 'Implementing high-security flows using JWT, OAuth2, and multi-factor OTP verification systems.',
+      skills: ['JWT', 'Bcrypt', 'Passport.js', 'OTP Systems']
+    },
+    {
+      title: 'Database Design',
+      description: 'Architecting MongoDB schemas with proper indexing, aggregation pipelines, and data normalization.',
+      skills: ['MongoDB', 'Mongoose', 'Aggregation', 'Indexing']
+    },
+    {
+      title: 'AI Integration',
+      description: 'Embedding LLMs and Computer Vision into products to automate complex decision-making and data extraction.',
+      skills: ['Groq', 'Llama 3', 'Tesseract.js', 'Prompt Engineering']
+    },
+    {
+      title: 'System Optimization',
+      description: 'Improving performance through rate limiting, caching, and efficient resource management.',
+      skills: ['Rate Limiting', 'Redis Caching', 'Pagination', 'Lighthouse']
+    },
+    {
+      title: 'Modern Frontend',
+      description: 'Building responsive, high-performance interfaces with motion-driven UX and state management.',
+      skills: ['React', 'Framer Motion', 'Tailwind CSS', 'Redux/Context']
+    }
+  ],
+  journey: [
+    {
+      year: '2022',
+      title: 'The Foundation',
+      description: 'Started Bachelor of Computer Applications (BCA), diving deep into C, Java, and Database fundamentals.'
+    },
+    {
+      year: '2023',
+      title: 'MERN Stack Mastery',
+      description: 'Built 20+ full-stack projects, mastering the transition from frontend design to complex backend logic.'
+    },
+    {
+      year: '2024',
+      title: 'AI Convergence',
+      description: 'Integrated LLMs into production-grade apps like CareerPath AI, winning the BMU Design Thinking Competition.'
+    },
+    {
+      year: '2025',
+      title: 'Engineering Scale',
+      description: 'Architected high-concurrency systems using BullMQ and Redis for asynchronous job scheduling.'
+    }
+  ],
   hireReasons: [
     {
       title: 'Architectural Hybrid',
@@ -671,7 +678,7 @@ export const portfolioData = {
     { label: 'Email', value: 'ankit827691@gmail.com', href: 'mailto:ankit827691@gmail.com' },
   ],
   careerKnowledge: {
-    bio: "I am Ankit Tiwari, an AI + Full-Stack Engineer focused on building products that feel 'engineered' but act 'intelligent.' I bridge the gap between creative UI and deep system logic.",
+    bio: "I am a BCA graduate and MERN stack specialist with a deep interest in backend engineering and AI integration. My journey started with a focus on DSA and problem-solving, which evolved into building complex full-stack systems. I've participated in numerous hackathons, refining my ability to build production-grade solutions under pressure. Currently, I focus on deploying AI layers into real-world products to solve practical challenges.",
     mission: "My mission is to deploy AI layers into real-world products to automate complex decision-making and improve human efficiency.",
     strengths: "My core strength lies in 'Architectural Fluidity'—the ability to jump from high-fidelity UI design to deep backend logic without losing sight of the product's goal.",
     deadlines: "I treat deadlines as fixed system constraints. I prioritize 'Signal over Noise,' ensuring the most critical features are production-hardened first.",
