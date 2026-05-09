@@ -3,11 +3,9 @@ import {
   motion, 
   useMotionValue, 
   useSpring, 
-  useScroll, 
-  useTransform 
+  useScroll
 } from 'framer-motion';
 import { 
-  ArrowLeft, 
   ArrowRight, 
   Bot, 
   BrainCircuit, 
@@ -16,40 +14,28 @@ import {
   Code, 
   Download, 
   ExternalLink, 
-  FileText, 
-  Filter, 
   Github, 
   Globe, 
   Layers, 
   Layout, 
   Linkedin, 
   Mail, 
-  Maximize2, 
   Monitor, 
-  RefreshCw, 
-  Search, 
-  ShieldAlert, 
-  Smartphone, 
-  Sparkles, 
   X,
   Map,
   Calendar,
-  MessageSquare,
   Send,
   Database,
   Lock,
   Zap,
   Activity,
-  Award,
   BookOpen,
   Menu
 } from 'lucide-react';
 import { useEffect, useRef, type ReactNode, useState } from 'react';
 import resumeFile from './assets/Ankittiwari_Resume.pdf';
 import profileImage from './assets/Image.png';
-import leetcodeIcon from './assets/icons8-leetcode-24.png';
 import careerPathThumbnail from './assets/careerpath_ai.png';
-import careerPathThumbnail2 from './assets/careerpath_ai_2.png';
 
 // CareerPath AI Real Assets
 import cpDash from './assets/CareerPathAI_Assets/UserDashboard.png';
@@ -82,28 +68,12 @@ import emailLogs from './assets/email_logs.png';
 import emailView from './assets/email_view.png';
 import emailSummary from './assets/email_summary.png';
 
-import safeSpendThumbnail from './assets/safespend.png';
-import medicineThumbnail from './assets/medicine_resale.png';
-import emailSchedulerThumbnail from './assets/email_scheduler.png';
-import systemExplorerThumbnail from './assets/system_explorer.png';
 import { portfolioData, type ProjectRecord, type SkillRecord } from './data/portfolio';
 import './index.css';
 
-const LeetCodeLogo = (props: any) => (
-  <img src={leetcodeIcon} alt="LeetCode" className={props.className} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
-);
 
-const GFGLogo = (props: any) => (
-  <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
-    <path fill="#43a047" d="M29.035,24C29.014,23.671,29,23.339,29,23c0-6.08,2.86-10,7-10c3.411,0,6.33,2.662,7,7l2,0l0.001-9	L43,11c0,0-0.533,1.506-1,1.16c-1.899-1.066-3.723-1.132-6.024-1.132C30.176,11.028,25,16.26,25,22.92	c0,0.364,0.021,0.723,0.049,1.08h-2.099C22.979,23.643,23,23.284,23,22.92c0-6.66-5.176-11.892-10.976-11.892	c-2.301,0-4.125,0.065-6.024,1.132C5.533,12.506,5,11,5,11l-2.001,0L3,20l2,0c0.67-4.338,3.589-7,7-7c4.14,0,7,3.92,7,10	c0,0.339-0.014,0.671-0.035,1H0v2h1.009c1.083,0,1.977,0.861,1.999,1.943C3.046,29.789,3.224,32.006,4,33c1.269,1.625,3,3,8,3	c5.022,0,9.92-4.527,11-10h2c1.08,5.473,5.978,10,11,10c5,0,6.731-1.375,8-3c0.776-0.994,0.954-3.211,0.992-5.057	C45.014,26.861,45.909,26,46.991,26H48v-2H29.035z M11.477,33.73C9.872,33.73,7.322,33.724,7,32	c-0.109-0.583-0.091-2.527-0.057-4.046C6.968,26.867,7.855,26,8.943,26H19C18.206,30.781,15.015,33.73,11.477,33.73z M41,32	c-0.322,1.724-2.872,1.73-4.477,1.73c-3.537,0-6.729-2.949-7.523-7.73h10.057c1.088,0,1.975,0.867,2,1.954	C41.091,29.473,41.109,31.417,41,32z"></path>
-  </svg>
-);
 
-type ProjectExplainState = {
-  title: string;
-  summary: string;
-  details: Array<{ label: string; value: string }>;
-};
+
 
 type AskPanelState = {
   title: string;
@@ -142,16 +112,7 @@ const scrollToId = (id: string) => {
   document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
 };
 
-const explainProject = (project: ProjectRecord): ProjectExplainState => ({
-  title: `Project Overview: ${project.title}`,
-  summary: project.summary,
-  details: [
-    { label: 'Project Structure', value: project.deep_specs?.architecture || 'Modular design' },
-    { label: 'Tech Rationale', value: project.deep_specs?.tech_rationale || 'Built for high performance and scalability.' },
-    { label: 'Challenges Solved', value: project.deep_specs?.challenges_solved?.[0] || 'Optimizing complex data flows.' },
-    { label: 'AI Integration', value: project.deep_specs?.ai_integration || 'Standard logic.' },
-  ],
-});
+
 
 const getAskPanelContent = (suggestion: (typeof askSuggestions)[number]): AskPanelState => {
   if (suggestion === 'Explain a project') {
@@ -189,22 +150,9 @@ const getAskPanelContent = (suggestion: (typeof askSuggestions)[number]): AskPan
 };
 
 function App() {
-  const [projectExplain, setProjectExplain] = useState<ProjectExplainState | null>(null);
   const [selectedProject, setSelectedProject] = useState<ProjectRecord | null>(null);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [activeFilter, setActiveFilter] = useState('All');
+  const filteredProjects = portfolioData.projects;
 
-  const filters = ['All', 'AI/ML', 'Full Stack', 'Backend', 'FinTech', 'HealthTech'];
-
-  const filteredProjects = portfolioData.projects.filter(p => {
-    const matchesSearch = p.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
-                         p.stack.some(s => s.toLowerCase().includes(searchQuery.toLowerCase()));
-    const matchesFilter = activeFilter === 'All' || (p.category && p.category.includes(activeFilter));
-    
-    return matchesSearch && matchesFilter;
-  });
-
-  const featuredProjects = portfolioData.projects.filter(p => p.featured);
   const [askPanelOpen, setAskPanelOpen] = useState(false);
   const [showWelcome, setShowWelcome] = useState(true);
   const [askPanelContent, setAskPanelContent] = useState<AskPanelState>(
@@ -213,7 +161,6 @@ function App() {
   const [isHovering, setIsHovering] = useState(false);
   const [githubRepos, setGithubRepos] = useState<any[]>([]);
   const [githubUser, setGithubUser] = useState<any>(null);
-  const [formStatus, setFormStatus] = useState<'idle' | 'sending' | 'success'>('idle');
   const [notification, setNotification] = useState<{ message: string; type: 'success' | 'info' } | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -240,35 +187,7 @@ function App() {
       .catch(() => {});
   }, []);
 
-  const handleContactSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setFormStatus('sending');
-    
-    const form = e.target as HTMLFormElement;
-    const formData = new FormData(form);
-    
-    try {
-      const response = await fetch('https://formspree.io/f/mpzvzqzk', { // Using a generic endpoint or user can replace with their own ID
-        method: 'POST',
-        body: formData,
-        headers: {
-          'Accept': 'application/json'
-        }
-      });
-      
-      if (response.ok) {
-        setFormStatus('success');
-        form.reset();
-        setTimeout(() => setFormStatus('idle'), 5000);
-      } else {
-        setFormStatus('idle');
-        alert('Transmission error. Please try again or use direct email.');
-      }
-    } catch (error) {
-      setFormStatus('idle');
-      alert('System offline. Please check your connectivity.');
-    }
-  };
+
 
   const achievementsRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress: achievementsProgress } = useScroll({
@@ -1152,23 +1071,7 @@ function App() {
         Ask about me
       </button>
 
-      <AnimatePresence>
-        {projectExplain ? (
-          <OverlayShell onClose={() => setProjectExplain(null)} title={projectExplain.title}>
-            <div className="space-y-6">
-              <p className="text-base leading-8 text-slate-300">{projectExplain.summary}</p>
-              <div className="grid gap-4">
-                {projectExplain.details.map((detail) => (
-                  <div key={detail.label} className="rounded-xl border border-white/10 bg-black/20 p-5">
-                    <p className="text-xs uppercase tracking-[0.28em] text-slate-500">{detail.label}</p>
-                    <p className="mt-3 text-sm leading-7 text-slate-300">{detail.value}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </OverlayShell>
-        ) : null}
-      </AnimatePresence>
+
 
       <AnimatePresence>
         {askPanelOpen ? (
@@ -1756,46 +1659,7 @@ function ProjectCarousel({
 }
 
 
-function FeaturedProjectCard({ project, index, onClick }: { project: ProjectRecord; index: number; onClick: () => void }) {
-  const images = project.images && project.images.length > 0 
-    ? project.images 
-    : [project.thumbnail || 'careerpath_ai_thumbnail'];
 
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ delay: index * 0.2 }}
-      onClick={onClick}
-      className="group relative h-[400px] overflow-hidden rounded-2xl border border-white/10 bg-[#0a0a0a] cursor-pointer"
-    >
-      <ProjectCarousel 
-        images={images} 
-        title={project.title} 
-        className="absolute inset-0 opacity-40 group-hover:opacity-60 transition-opacity" 
-      />
-      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent pointer-events-none" />
-      
-      <div className="absolute inset-0 p-8 flex flex-col justify-end pointer-events-none">
-        <div className="flex items-center gap-3 mb-4">
-          <span className="px-2 py-1 bg-amber-500/10 border border-amber-500/20 text-amber-500 text-[8px] uppercase tracking-widest font-bold rounded">Featured Build</span>
-          <div className="h-px w-8 bg-white/20" />
-        </div>
-        <h3 className="text-4xl font-bold text-white mb-2 tracking-tighter uppercase">{project.title}</h3>
-        <p className="text-sm text-slate-300 max-w-md line-clamp-2 mb-6 font-light">{project.summary}</p>
-        
-        <div className="flex flex-wrap gap-2">
-          {project.stack.slice(0, 4).map(s => (
-            <span key={s} className="text-[9px] text-slate-400 uppercase font-mono tracking-wider bg-white/5 px-2 py-1 rounded">
-              {s}
-            </span>
-          ))}
-        </div>
-      </div>
-    </motion.div>
-  );
-}
 
 function ProjectShowcaseCard({ project, index, onClick }: { project: ProjectRecord; index: number; onClick: () => void }) {
   const images = project.images && project.images.length > 0 
