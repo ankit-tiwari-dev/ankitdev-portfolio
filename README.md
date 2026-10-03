@@ -12,7 +12,7 @@
 - 🎬 **Cinematic Welcome Screen** — Two-phase animated entry: pulsing orb → staggered character reveal + live terminal boot sequence
 - 🖼️ **Real Screenshot Carousels** — Auto-cycling multi-image carousels for every project, powered by actual application screenshots
 - 🔍 **Case Study Modals** — Deep-dive overlays with architecture notes, tech rationale, system flow, and challenge breakdowns
-- 🤖 **AI Ask Panel** — Deterministic knowledge panel for HR-friendly technical Q&A about skills and projects
+- 🤖 **Project Agent Chat** — Groq reads five detailed project skill files and answers technical questions with project context
 - 🎯 **Custom Cursor** — Magnetic spring-physics cursor system with hover state detection
 - 📱 **Fully Responsive** — Optimized across mobile, tablet, and desktop viewports
 
@@ -60,6 +60,13 @@ Open [http://localhost:5173](http://localhost:5173) in your browser.
 - **Screenshot assets** are in `src/assets/` — referenced via `thumbnailMap` in `App.tsx`
 - **ProjectCarousel** is a reusable component used in both grid cards and case study modals
 - **WelcomeScreen** is a self-contained two-phase component with `idle` and `reveal` states
+- **Project knowledge** lives in `src/knowledge/project-skills/` as one Markdown skill file per project. The chat sends these files with each question to the server-side `/api/chat` endpoint; the browser never receives the Groq API key.
+
+### Enable AI Answers
+
+Set `GROQ_API_KEY` in the Vercel project's server-side environment variables and redeploy. Optionally set `GROQ_MODEL` to choose another Groq chat model. Do not prefix the key with `VITE_` or put it in client-side code. Until the key is configured, the chat reports that AI is unavailable and can show clearly labeled matching notes from the skill files instead.
+
+For local serverless testing, run the project with Vercel's development server (`vercel dev`) and provide `GROQ_API_KEY` through Vercel's environment configuration. `npm run dev` starts Vite only, so `/api/chat` is unavailable there.
 
 ---
 

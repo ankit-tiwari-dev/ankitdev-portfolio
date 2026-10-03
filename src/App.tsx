@@ -69,16 +69,12 @@ import emailView from './assets/email_view.png';
 import emailSummary from './assets/email_summary.png';
 
 import { portfolioData, type ProjectRecord, type SkillRecord } from './data/portfolio';
+import ProjectAgentChat from './components/ProjectAgentChat';
 import './index.css';
 
 
 
 
-
-type AskPanelState = {
-  title: string;
-  points: string[];
-};
 
 const capabilityBands: Array<{
   title: string;
@@ -102,52 +98,11 @@ const capabilityBands: Array<{
   },
 ];
 
-const askSuggestions = [
-  'Explain a project',
-  'What are his strengths?',
-  'What technologies does he use?',
-] as const;
-
 const scrollToId = (id: string) => {
   document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
 };
 
 
-
-const getAskPanelContent = (suggestion: (typeof askSuggestions)[number]): AskPanelState => {
-  if (suggestion === 'Explain a project') {
-    const project = portfolioData.projects[0];
-
-    return {
-      title: `Agent Report: ${project.title}`,
-      points: [
-        `Architecture: ${project.deep_specs?.architecture}`,
-        `Reasoning: ${project.deep_specs?.tech_rationale}`,
-        `Challenge Solved: ${project.deep_specs?.challenges_solved?.[0]}`,
-        `AI Implementation: ${project.deep_specs?.ai_integration || 'N/A'}`,
-      ],
-    };
-  }
-
-  if (suggestion === 'What are his strengths?') {
-    const k = (portfolioData as any).careerKnowledge;
-    return {
-      title: 'Expert Interpretation',
-      points: [
-        `Primary Strength: ${k.strengths}`,
-        `AI Vision: ${k.ai_vision}`,
-        `Execution Style: ${k.deadlines}`,
-      ],
-    };
-  }
-
-  return {
-    title: 'Technology Core',
-    points: capabilityBands.map(
-      (band) => `${band.title}: ${band.skills.map((skill) => skill.name).join(', ')}`,
-    ),
-  };
-};
 
 function App() {
   const [selectedProject, setSelectedProject] = useState<ProjectRecord | null>(null);
@@ -155,11 +110,7 @@ function App() {
 
   const [askPanelOpen, setAskPanelOpen] = useState(false);
   const [showWelcome, setShowWelcome] = useState(true);
-  const [askPanelContent, setAskPanelContent] = useState<AskPanelState>(
-    getAskPanelContent('Explain a project'),
-  );
   const [isHovering, setIsHovering] = useState(false);
-  const [githubRepos, setGithubRepos] = useState<any[]>([]);
   const [githubUser, setGithubUser] = useState<any>(null);
   const [notification, setNotification] = useState<{ message: string; type: 'success' | 'info' } | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -169,10 +120,6 @@ function App() {
     setTimeout(() => setNotification(null), 3000);
   };
 
-  const handleSuggestionClick = (suggestion: (typeof askSuggestions)[number]) => {
-    setAskPanelContent(getAskPanelContent(suggestion));
-  };
-
   useEffect(() => {
     // Fetch User Profile
     fetch('https://api.github.com/users/ankit-tiwari-dev')
@@ -180,11 +127,6 @@ function App() {
       .then(data => setGithubUser(data))
       .catch(() => {});
 
-    // Fetch Repos
-    fetch('https://api.github.com/users/ankit-tiwari-dev/repos?sort=updated&per_page=5')
-      .then(res => res.json())
-      .then(data => Array.isArray(data) && setGithubRepos(data.slice(0, 5)))
-      .catch(() => {});
   }, []);
 
 
@@ -1076,64 +1018,7 @@ function App() {
       <AnimatePresence>
         {askPanelOpen ? (
           <OverlayShell onClose={() => setAskPanelOpen(false)} title="Ask about me" eyebrow="Intelligence Layer">
-            <div className="space-y-6">
-              <div className="space-y-4">
-                <p className="text-xs text-slate-400">
-                  Full RAG-based AI integration is currently under development. For now, please select a predefined insight:
-                </p>
-                <div className="flex flex-col sm:flex-row flex-wrap gap-2 sm:gap-3">
-                  {askSuggestions.map((suggestion) => (
-                    <button
-                      key={suggestion}
-                      className="ask-suggestion-card text-left sm:text-center flex-1 min-w-[200px]"
-                      onClick={() => handleSuggestionClick(suggestion)}
-                      type="button"
-                    >
-                      <BrainCircuit size={16} className="text-amber-200 shrink-0" />
-                      <span className="leading-snug mt-3">{suggestion}</span>
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              <div className="overlay-brief-card">
-                <p className="text-xs uppercase tracking-[0.28em] text-slate-500">Agent Response</p>
-                <p className="mt-3 font-heading text-xl font-medium tracking-[-0.03em] text-white sm:text-2xl">
-                  {askPanelContent.title}
-                </p>
-                <div className="mt-5 space-y-4">
-                  {askPanelContent.points.map((point) => (
-                    <div key={point} className="flex items-start gap-3">
-                      <div className="mt-2 h-1.5 w-1.5 rounded-full bg-amber-500/50 shadow-[0_0_8px_rgba(245,158,11,0.5)]" />
-                      <p className="text-sm leading-7 text-slate-300">
-                        {point}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-
-                {/* Live GitHub Signal in AI Response */}
-                {githubRepos.length > 0 && (
-                  <div className="mt-10 border-t border-white/5 pt-8">
-                    <p className="text-[10px] uppercase tracking-[0.4em] text-slate-600 mb-4">Live GitHub Repository Stream</p>
-                    <div className="space-y-3">
-                      {githubRepos.map(repo => (
-                        <div key={repo.id} className="flex items-center justify-between group/repo">
-                          <div className="flex items-center gap-3">
-                            <div className="h-1 w-1 rounded-full bg-emerald-500 animate-pulse" />
-                            <span className="text-xs font-mono text-slate-400 group-hover/repo:text-amber-200 transition-colors">{repo.name}</span>
-                          </div>
-                          <div className="flex items-center gap-4 text-[10px] text-slate-600">
-                            <span>{repo.language || 'JS'}</span>
-                            <span className="flex items-center gap-1">★ {repo.stargazers_count}</span>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                )}
-              </div>
-            </div>
+            <ProjectAgentChat />
           </OverlayShell>
         ) : null}
       </AnimatePresence>
